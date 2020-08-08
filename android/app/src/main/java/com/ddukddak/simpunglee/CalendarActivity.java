@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -30,6 +32,10 @@ public class CalendarActivity extends AppCompatActivity {
     private static final String TAG_IMAGE = "image";
 
     ImageButton emojiSelection;
+    Button save_button, edit_button;
+    EditText diary_title, diary_content;
+
+    int clickedYear, clickedMonth, clickedDay, clickedDayOfWeek;
 
     List<Map<String, Object>> dialogItemList;
 
@@ -40,6 +46,35 @@ public class CalendarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+
+        save_button = findViewById(R.id.save_button);
+        save_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 다이어리 저장
+                saveDiary(clickedYear, clickedMonth, clickedDay, clickedDayOfWeek);
+            }
+        });
+
+        edit_button = findViewById(R.id.edit_button);
+        edit_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 수정할 수 있게 editText 접근할 수 있게 하기
+                diary_title.setFocusable(true);
+                diary_title.setFocusableInTouchMode(true);
+
+                diary_content.setFocusableInTouchMode(true);
+                diary_content.setFocusable(true);
+
+                emojiSelection.setFocusableInTouchMode(true);
+                emojiSelection.setFocusable(true);
+                emojiSelection.setEnabled(true);
+            }
+        });
+
+        diary_content = findViewById(R.id.diary_content);
+        diary_title = findViewById(R.id.diary_title);
 
         emojiSelection = findViewById(R.id.emojiSelection);
         emojiSelection.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +102,14 @@ public class CalendarActivity extends AppCompatActivity {
         datePickerTimeline.setOnDateSelectedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(int year, int month, int day, int dayOfWeek) {
-                // Do Something
+                // 다이어리 현재 날짜 저장
+                clickedYear = year;
+                clickedMonth = month;
+                clickedDay = day;
+                clickedDayOfWeek = dayOfWeek;
+
+                // 다이어리 현재 날짜에 맞는 다이어리 저장된거 서버에서 가져와서
+                // 다이어리에 보여주기
             }
 
             @Override
@@ -83,9 +125,33 @@ public class CalendarActivity extends AppCompatActivity {
 
     }
 
-    private void showEmojiDialog()
-    {
+    private void saveDiary(int year, int month, int day, int dayOfWeek) {
 
+        // 다이어리 내용 클릭된 날짜와 함께 서버로 넘기는 부분
+
+        // 입력된 내용이 모자랄 경우 예외처리
+        if (diary_title.equals("")){
+            Toast.makeText(CalendarActivity.this, "제목을 입력해주세요", Toast.LENGTH_SHORT).show();
+        }else if (diary_content.equals("")){
+            Toast.makeText(CalendarActivity.this, "내용을 입력해주세요", Toast.LENGTH_SHORT).show();
+        }else if(diary_title.equals("") && diary_content.equals("")){
+            Toast.makeText(CalendarActivity.this, "제목과 내용을 입력해주세요", Toast.LENGTH_SHORT).show();
+        }
+
+        // 저장 후 변경 불가능하게
+        diary_title.setFocusable(false);
+        diary_title.setClickable(false);
+
+        diary_content.setClickable(false);
+        diary_content.setFocusable(false);
+
+        emojiSelection.setClickable(false);
+        emojiSelection.setFocusable(false);
+        emojiSelection.setEnabled(false);
+        return;
+    }
+
+    private void showEmojiDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(CalendarActivity.this);
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_emoji, null);
