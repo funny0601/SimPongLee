@@ -67,8 +67,7 @@ public class CalendarActivity extends AppCompatActivity {
                 diary_content.setFocusableInTouchMode(true);
                 diary_content.setFocusable(true);
 
-                emojiSelection.setFocusableInTouchMode(true);
-                emojiSelection.setFocusable(true);
+                emojiSelection.setClickable(true);
                 emojiSelection.setEnabled(true);
             }
         });
@@ -77,6 +76,8 @@ public class CalendarActivity extends AppCompatActivity {
         diary_title = findViewById(R.id.diary_title);
 
         emojiSelection = findViewById(R.id.emojiSelection);
+        emojiSelection.setClickable(false);
+        emojiSelection.setEnabled(false);
         emojiSelection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +103,7 @@ public class CalendarActivity extends AppCompatActivity {
         datePickerTimeline.setOnDateSelectedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(int year, int month, int day, int dayOfWeek) {
-                // 다이어리 현재 날짜 저장
+                // 다이어리 선택된 현재 날짜 저장
                 clickedYear = year;
                 clickedMonth = month;
                 clickedDay = day;
@@ -121,7 +122,6 @@ public class CalendarActivity extends AppCompatActivity {
 // Disable date
         Date[] dates = {Calendar.getInstance().getTime()};
         datePickerTimeline.deactivateDates(dates);
-
 
     }
 
@@ -146,7 +146,6 @@ public class CalendarActivity extends AppCompatActivity {
         diary_content.setFocusable(false);
 
         emojiSelection.setClickable(false);
-        emojiSelection.setFocusable(false);
         emojiSelection.setEnabled(false);
         return;
     }
