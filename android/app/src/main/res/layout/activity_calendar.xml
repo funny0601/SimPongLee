@@ -1,17 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="9">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent">
+            <ImageButton
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_dehaze_24" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="다이어리"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_weight="3"
+            android:textSize="30dp"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_today"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="today's date"
+                android:textSize="13dp"
+                android:textStyle="bold"
+                android:textColor="#787A7D"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_dehaze_24" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="@color/colorAccent">
+        android:background="#787A7D">
 
         <com.vivekkaushik.datepicker.DatePickerTimeline
             android:id="@+id/datePickerTimeline"
@@ -32,24 +83,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="10"
-        android:orientation="horizontal"
-        android:background="@color/colorAccent">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="7"
-            android:padding="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:text="TITLE"
             android:textSize="@dimen/dayTextSize"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#787A7D" />
 
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="3"
             android:textStyle="bold"
-            android:padding="10dp"
+            android:textColor="#787A7D"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:textSize="@dimen/dayTextSize"
             android:text="MOOD"/>
 
@@ -59,14 +115,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="9"
-        android:orientation="vertical"
-        android:background="@drawable/background_shape">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:weightSum="10"
+            android:paddingLeft="10dp"
             android:orientation="horizontal">
 
             <EditText
@@ -74,6 +130,7 @@
                 android:layout_width="0dp"
                 android:id="@+id/diary_title"
                 android:focusable="false"
+                android:clickable="false"
                 android:hint="제목을 입력해주세요"
                 android:layout_weight="7"
                 android:paddingLeft="10dp"
@@ -82,6 +139,7 @@
                 android:ellipsize="end"
                 android:maxLength="15"
                 android:maxLines="1"
+                android:backgroundTint = "#7491A6"
                 android:textSize="@dimen/dateTextSize"/>
 
             <ImageButton
@@ -98,15 +156,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="horizontal"
-            android:background="@color/colorAccent">
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:text="CONTENT"
                 android:textStyle="bold"
+                android:textColor="#787A7D"
                 android:textSize="@dimen/dayTextSize"/>
 
         </LinearLayout>
@@ -118,12 +178,14 @@
             android:background="@color/cardview_shadow_start_color">
 
             <EditText
+                android:hint = "내용을 입력해주세요"
                 android:id="@+id/diary_content"
                 android:layout_width="match_parent"
-                android:layout_height="335dp"
-                android:background="@android:color/transparent"
+                android:layout_height="match_parent"
+                android:background="#E7E7E9"
                 android:focusable="false"
                 android:gravity="top"
+                android:clickable="false"
                 android:inputType="textMultiLine|textNoSuggestions"
                 android:padding="10dp" />
 
@@ -142,11 +204,11 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:textColor="@color/white"
-                android:background="@drawable/button_background"
+                android:background="@color/colorPrimaryDark"
                 android:text="수정하기"
                 android:id="@+id/edit_button"/>
             <Button
-                android:background="@drawable/button_background"
+                android:background="@color/colorPrimaryDark"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"

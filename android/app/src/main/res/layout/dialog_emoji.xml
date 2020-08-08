@@ -21,12 +21,13 @@
             android:layout_margin="20dp"
             android:text="오늘 당신의 기분을 골라주세요"/>
 
-        <ListView
+        <GridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@null"
+            android:numColumns="3"
             android:dividerHeight="10dp"
-            android:id="@+id/listview_alterdialog_list"/>
+            android:id="@+id/gridview_alterdialog_list"/>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
