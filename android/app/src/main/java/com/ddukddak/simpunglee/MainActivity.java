@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        Toast.makeText(this, "hi", Toast.LENGTH_LONG()).show();
         /* xml 작업을 위한 주석 처리
         // 위젯에 대한 참조.
         tv_outPut = (TextView) findViewById(R.id.tv_outPut);
