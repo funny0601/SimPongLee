@@ -1,5 +1,6 @@
 package com.ddukddak.simpunglee;
 
+import android.content.ContentValues;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,8 +19,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.vivekkaushik.datepicker.DatePickerTimeline;
 import com.vivekkaushik.datepicker.OnDateSelectedListener;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,8 +33,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class CalendarActivity extends AppCompatActivity {
+
+    String url = "http://192.168.35.93:8080/";
 
     private static final String TAG_TEXT = "text";
     private static final String TAG_IMAGE = "image";
@@ -41,9 +50,9 @@ public class CalendarActivity extends AppCompatActivity {
 
     List<Map<String, Object>> dialogItemList;
 
-    int[] image = {R.drawable.ic_baseline_eco_24, R.drawable.ic_baseline_cloud_24, R.drawable.ic_baseline_brightness_2_24,
-            R.drawable.ic_baseline_eco_24, R.drawable.ic_baseline_cloud_24, R.drawable.ic_baseline_brightness_2_24,
-            R.drawable.ic_baseline_eco_24, R.drawable.ic_baseline_cloud_24, R.drawable.ic_baseline_brightness_2_24};
+    int[] image = {R.drawable.img_0, R.drawable.img_1, R.drawable.img_2,
+            R.drawable.img_3, R.drawable.img_4, R.drawable.img_5,
+            R.drawable.img_6, R.drawable.img_7, R.drawable.img_8};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +64,7 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 다이어리 저장
-                saveDiary(clickedYear, clickedMonth, clickedDay);
+                saveDiary(clickedYear, clickedMonth+1, clickedDay);
             }
         });
 
@@ -107,16 +116,16 @@ public class CalendarActivity extends AppCompatActivity {
         tv_today = findViewById(R.id.tv_today);
         tv_today.setText("TODAY\n"+cal.get(Calendar.YEAR) + " "+changeMonth(cal.get(Calendar.MONTH)) + " "+cal.get(Calendar.DATE) +" "+ changeDayOfWeek(cal.get(Calendar.DAY_OF_WEEK)));
 
-        // System.out.println("현재 시각은 " + clickedYear + "년도 " + clickedMonth + "월 " );
+
         datePickerTimeline.setInitialDate(clickedYear, clickedMonth, clickedDay-3);
         datePickerTimeline.setActiveDate(cal);
-
-        // ActiveDate 다이어리 바로 가져오는 Task 여기에 작성하기
 
         // <3> 선택된 날짜, userid를 넘겨서 해당 날짜에 다이어리가 있는지 조회하기
         // SELECT로 조회해서 있으면 title, 무드, 내용을 가져와서
         // diary_title, diary_content, emojiSelection으로 보여주기
-        // 없을 경우에는 없다는 메시지 반환
+
+        // ActiveDate 다이어리 바로 가져오는 Task 여기에 작성하기
+        setUpdateOption(getDiary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DATE)));
 
         datePickerTimeline.setOnDateSelectedListener(new OnDateSelectedListener() {
             @Override
@@ -130,34 +139,7 @@ public class CalendarActivity extends AppCompatActivity {
                 // <3> 선택된 날짜, userid를 넘겨서 해당 날짜에 다이어리가 있는지 조회하기
                 // SELECT로 조회해서 있으면 title, 무드, 내용을 가져와서
                 // diary_title, diary_content, emojiSelection으로 보여주기
-                // 없을 경우에는 없다는 메시지 반환
-
-                // 1. 저장된 다이어리 내용이 없을 경우
-                diary_title.setText("");
-                diary_content.setText("");
-                emojiSelection.setImageResource(R.drawable.ic_baseline_emoji_emotions_24);
-
-                // 바로 일정 추가할 수 있게
-                diary_title.setFocusable(true);
-                diary_title.setFocusableInTouchMode(true);
-
-                diary_content.setFocusableInTouchMode(true);
-                diary_content.setFocusable(true);
-
-                emojiSelection.setClickable(true);
-                emojiSelection.setEnabled(true);
-
-                // 2. 저장된 내용이 있을 경우
-                // 수정하기 누르기 전에는 편집 불가능하게
-                diary_title.setFocusable(false);
-                diary_title.setClickable(false);
-
-                diary_content.setClickable(false);
-                diary_content.setFocusable(false);
-
-                emojiSelection.setClickable(false);
-                emojiSelection.setEnabled(false);
-
+                setUpdateOption(getDiary(clickedYear, clickedMonth+1, clickedDay));
             }
 
             @Override
@@ -166,35 +148,100 @@ public class CalendarActivity extends AppCompatActivity {
         });
 
     }
+    
+    private void setUpdateOption(boolean flag){
+        if (flag){
+            // 저장된 내용이 있을 경우
+            // 수정하기 누르기 전에는 편집 불가능하게
+            diary_title.setFocusable(false);
+            diary_title.setClickable(false);
 
+            diary_content.setClickable(false);
+            diary_content.setFocusable(false);
+
+            emojiSelection.setClickable(false);
+            emojiSelection.setEnabled(false);
+        }else{
+            // 저장된 다이어리 내용이 없을 경우
+            diary_title.setText("");
+            diary_content.setText("");
+            emojiSelection.setImageResource(R.drawable.img_0);
+
+            // 바로 일정 추가할 수 있게
+            diary_title.setFocusable(true);
+            diary_title.setFocusableInTouchMode(true);
+
+            diary_content.setFocusableInTouchMode(true);
+            diary_content.setFocusable(true);
+
+            emojiSelection.setClickable(true);
+            emojiSelection.setEnabled(true);
+        }
+    }
+    private boolean getDiary(int year, int month, int day){
+
+        boolean flag = false;
+        String date = year + "" + month + "" + day;
+
+        ContentValues values = new ContentValues();
+
+        values.put("userid", 2); //숫자
+        values.put("date", date);
+
+        NetworkTask getDiaryTask = new NetworkTask(url+"selectDiary", values);
+
+        try {
+            String receivedText = getDiaryTask.execute().get();
+            if (receivedText.equals("[]")){
+                flag = false; // 등록된 다이어리 내용이 없으면
+            } else{
+                parseJson(receivedText);
+                flag = true; // 등록된 다이어리 내용이 있으면 파싱해서 다이어리 보여주기
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return flag;
+    }
     private void saveDiary(int year, int month, int day) {
 
-        clickedMonth = clickedMonth +1; // 라이브러리가 1달 밀린 상태로 표기됨
-
+        String date = year + "" + month + "" + day;
         // <1, 2> 다이어리 내용 클릭된 날짜, userid, 제목, 내용, 무드 와 함께 서버로 넘기는 부분
         // 서버에서 처리할 것 -> 해당 날짜가 이미 있으면 UPDATE, 없어서 새로 등록하는 거면 INSERT
+
+        ContentValues values = new ContentValues();
+
+        values.put("userid", 2); //숫자
+        values.put("title", String.valueOf(diary_title.getText()));
+        values.put("body", String.valueOf(diary_content.getText()));
+        values.put("mood", 8); //숫자
+        values.put("date", date);
+
+        NetworkTask saveDiaryTask = new NetworkTask(url+"putDiary", values);
 
         // 입력된 내용이 모자랄 경우 예외처리
         if (diary_title.equals("")){
             Toast.makeText(CalendarActivity.this, "제목을 입력해주세요", Toast.LENGTH_SHORT).show();
+            return;
         }else if (diary_content.equals("")){
             Toast.makeText(CalendarActivity.this, "내용을 입력해주세요", Toast.LENGTH_SHORT).show();
+            return;
         }else if(diary_title.equals("") && diary_content.equals("")){
             Toast.makeText(CalendarActivity.this, "제목과 내용을 입력해주세요", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        System.out.println("현재 시각은 " + clickedYear + "년도 " + clickedMonth + "월 " + clickedDay + "일");
-
-        // 저장 후 변경 불가능하게
-        diary_title.setFocusable(false);
-        diary_title.setClickable(false);
-
-        diary_content.setClickable(false);
-        diary_content.setFocusable(false);
-
-        emojiSelection.setClickable(false);
-        emojiSelection.setEnabled(false);
-        return;
+        try {
+            String response = saveDiaryTask.execute().get();
+            Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showEmojiDialog() {
@@ -223,6 +270,21 @@ public class CalendarActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
+    }
+
+    private void parseJson(String context){
+
+        // 파싱해서 다이어리 화면에 보이게 하기
+        JsonParser jsonParser = new JsonParser();
+        JsonArray jsonArray = (JsonArray) jsonParser.parse(context);
+        JsonObject object = (JsonObject) jsonArray.get(0);
+        int mood = object.get("mood").getAsInt();
+        String title = object.get("title").getAsString();
+        String body = object.get("body").getAsString();
+
+        diary_content.setText(body);
+        diary_title.setText(title);
+        emojiSelection.setImageResource(image[mood]);
     }
 
     private String changeDayOfWeek(int num) {
@@ -298,3 +360,5 @@ public class CalendarActivity extends AppCompatActivity {
         return monthString;
     }
 }
+
+

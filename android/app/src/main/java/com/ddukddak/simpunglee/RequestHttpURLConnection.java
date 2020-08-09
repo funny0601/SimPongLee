@@ -61,7 +61,7 @@ public class RequestHttpURLConnection {
 
             // [2-1]. urlConn 설정.
             urlConn.setRequestMethod("POST"); // URL 요청에 대한 메소드 설정 : POST.
-            urlConn.setRequestProperty("content-type", "application/json;charset=utf-8");
+            // urlConn.setRequestProperty("content-type", "application/json;charset=utf-8");
 
             // [2-2]. parameter 전달 및 데이터 읽어오기.
             String strParams = sbParams.toString(); //sbParams에 정리한 파라미터들을 스트링으로 저장. 예)id=id1&pw=123;
