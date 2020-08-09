@@ -7,23 +7,19 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import com.example.dto.CalendarVO;
-import com.example.dto.SelfDiagnosisVO;
 import com.example.service.CalendarService;
-import com.example.service.SelfDiagnosisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-public class HomeController {
+public class CalendarController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(CalendarController.class);
 
 	@Inject
 	private CalendarService calendarService;
-	private SelfDiagnosisService selfDiagnosisService;
 
 	@RequestMapping(value = "/selectDiary", method = {RequestMethod.POST,RequestMethod.GET})
 	public List<CalendarVO> selectDiary(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
@@ -65,16 +61,4 @@ public class HomeController {
 		return status;
 	}
 
-	@RequestMapping(value = "/selectQuestion", method = {RequestMethod.POST,RequestMethod.GET})
-	public List<SelfDiagnosisVO> selectQuestion(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
-
-		logger.info("selectQuestion");
-
-		String question = httpServletRequest.getParameter("question");
-		int questionid = Integer.parseInt(httpServletRequest.getParameter("questionid"));
-
-		List questionList = selfDiagnosisService.selectQuestion(question, questionid);
-
-		return questionList;
-	}
 }

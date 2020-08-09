@@ -6,7 +6,7 @@
 
 		<typeAliases>
 			<typeAlias type="com.example.dto.CalendarVO" alias="CalendarVO"/>
-			<typeAlias type="com.exmple.dto.SelfDiagnosisVo" alias="SelfDiagnosisVO"/>
+			<typeAlias type="com.example.dto.SelfDiagnosisVO" alias="SelfDiagnosisVO"/>
 		</typeAliases>
 
 	</configuration>

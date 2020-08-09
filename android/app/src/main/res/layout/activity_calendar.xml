@@ -149,7 +149,7 @@
                 android:id="@+id/emojiSelection"
                 android:scaleType="centerInside"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_baseline_emoji_emotions_24" />
+                android:src="@drawable/img_0" />
 
         </LinearLayout>
 

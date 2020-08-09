@@ -212,6 +212,16 @@ public class CalendarActivity extends AppCompatActivity {
         // <1, 2> 다이어리 내용 클릭된 날짜, userid, 제목, 내용, 무드 와 함께 서버로 넘기는 부분
         // 서버에서 처리할 것 -> 해당 날짜가 이미 있으면 UPDATE, 없어서 새로 등록하는 거면 INSERT
 
+        // 저장버튼 눌렀으니까 수정 못함
+        diary_title.setFocusable(false);
+        diary_title.setClickable(false);
+
+        diary_content.setClickable(false);
+        diary_content.setFocusable(false);
+
+        emojiSelection.setClickable(false);
+        emojiSelection.setEnabled(false);
+
         ContentValues values = new ContentValues();
 
         values.put("userid", 2); //숫자
@@ -242,6 +252,8 @@ public class CalendarActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+
     }
 
     private void showEmojiDialog() {

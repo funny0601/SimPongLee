@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="Maven: org.springframework:spring-jdbc:4.3.3.RELEASE">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/springFramework/spring-jdbc/4.3.3.RELEASE/spring-jdbc-4.3.3.RELEASE.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-jdbc/4.3.3.RELEASE/spring-jdbc-4.3.3.RELEASE.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-jdbc/4.3.3.RELEASE/spring-jdbc-4.3.3.RELEASE-javadoc.jar!/" />
