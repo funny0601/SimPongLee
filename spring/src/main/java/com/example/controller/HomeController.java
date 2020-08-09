@@ -25,7 +25,7 @@ public class HomeController {
 	private CalendarService calendarService;
 	private SelfDiagnosisService selfDiagnosisService;
 
-	@RequestMapping(value = "/selectDiary", produces="application/json; charset=utf-8", method = {RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value = "/selectDiary", method = {RequestMethod.POST,RequestMethod.GET})
 	public List<CalendarVO> selectDiary(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
 
 		logger.info("selectDiary");
@@ -38,7 +38,7 @@ public class HomeController {
 		return calendarList;
 	}
 
-	@RequestMapping(value = "/putDiary", produces="application/json; charset=utf-8", method = {RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value = "/putDiary", method = {RequestMethod.POST,RequestMethod.GET})
 	public String putDiary(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
 
 		logger.info("putDiary");
@@ -65,7 +65,7 @@ public class HomeController {
 		return status;
 	}
 
-	@RequestMapping(value = "/selectQuestion", produces="application/json; charset=utf-8", method = {RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value = "/selectQuestion", method = {RequestMethod.POST,RequestMethod.GET})
 	public List<SelfDiagnosisVO> selectQuestion(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
 
 		logger.info("selectQuestion");
