@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="32d6c11f-48be-4152-8b2c-02ee8f7585c1" name="Simpunglee">
+        <fileTransfer accessType="SFTP" host="3.35.65.128" port="22" sshConfigId="ee685c58-9c33-4fe7-bd40-0f99b69befa2" sshConfig="ubuntu@3.35.65.128:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

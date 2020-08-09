@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="3.35.65.128" id="ee685c58-9c33-4fe7-bd40-0f99b69befa2" keyPath="C:\Users\최인아\Desktop\프로젝트\안드로이드_한이음_우울즘\Android.ppk" port="22" nameFormat="DESCRIPTIVE" username="ubuntu" />
+    </configs>
+  </component>
+</project>
