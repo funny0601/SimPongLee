@@ -4,44 +4,61 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
+import com.example.dto.CalendarVO;
+import com.example.service.CalendarService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.dto.MemberVO;
-import com.example.service.MemberService;
-import com.mysql.cj.xdevapi.JsonArray;
 
-/**
- * Handles requests for the application home page.
- */
 @RestController
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+
 	@Inject
-	private MemberService service;
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/", produces="application/json; charset=utf-8", method = {RequestMethod.POST,RequestMethod.GET})
-	public List<MemberVO> home(Locale locale, Model model) throws Exception{
+	private CalendarService calendarService;
 
-		logger.info("home");
-		
-		List<MemberVO> memberList = service.selectMember();
-		
-		model.addAttribute("memberList", memberList);
+	@RequestMapping(value = "/selectDiary", produces="application/json; charset=utf-8", method = {RequestMethod.POST,RequestMethod.GET})
+	public List<CalendarVO> selectDiary(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
 
-		return memberList;
+		logger.info("selectDiary");
+
+		String date = httpServletRequest.getParameter("date");
+		int userid = Integer.parseInt(httpServletRequest.getParameter("userid"));
+
+		List calendarList = calendarService.selectDiary(date, userid);
+
+		return calendarList;
 	}
-	
+
+	@RequestMapping(value = "/putDiary", produces="application/json; charset=utf-8", method = {RequestMethod.POST,RequestMethod.GET})
+	public String putDiary(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
+
+		logger.info("putDiary");
+
+		String status = null;
+
+		String date = httpServletRequest.getParameter("date");
+		int userid = Integer.parseInt(httpServletRequest.getParameter("userid"));
+		String title= httpServletRequest.getParameter("title");
+		String body = httpServletRequest.getParameter("body");
+		int mood = Integer.parseInt(httpServletRequest.getParameter("mood"));
+
+		List calendarList = calendarService.selectDiary(date, userid);
+
+		if (calendarList.isEmpty()) {
+			logger.info("해당 날짜의 다이어리가 비어있습니다 -> insert");
+			calendarService.insertDiary(date, userid, title, body, mood);
+			status = "finished insert";
+		}else {
+			logger.info("해당 날짜의 다이어리가 이미 있습니다 -> update");
+			calendarService.updateDiary(date, userid, title, body, mood);
+			status = "finished update";
+		}
+		return status;
+	}
 }
