@@ -1,5 +1,6 @@
 package com.example.dao;
 
+import com.example.dto.SelfDiagnosisVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -17,12 +18,12 @@ public class SelfDiagnosisDAOImpl implements SelfDiagnosisDAO {
 	private static final String Namespace = "com.example.mapper.selfDiagnosisMapper";
 	
 	@Override
-	public List selectQuestion(String question, int questionid) throws Exception {
+	public List selectQuestion(int questionid) throws Exception {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("question", question);
+		//map.put("question", question);
 		map.put("questionid", questionid);
-		return sqlSession.selectList(Namespace+".selectQuestion", map);
+		return sqlSession.selectList(Namespace + ".selectQuestion", map);
 	}
 
 }

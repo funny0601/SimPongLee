@@ -8,9 +8,7 @@ public class SelfDiagnosisVO {
         return question;
     }
 
-    public int getQuestionid() {
-        return questionid;
-    }
+    public int getQuestionid() { return questionid; }
 
     public void setQuestion(String question) {
         this.question = question;

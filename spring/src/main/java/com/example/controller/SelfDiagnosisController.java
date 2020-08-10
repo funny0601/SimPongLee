@@ -6,12 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Locale;
 
+@RestController
 public class SelfDiagnosisController {
 
     private static final Logger logger = LoggerFactory.getLogger(CalendarController.class);
@@ -24,10 +26,10 @@ public class SelfDiagnosisController {
 
         logger.info("selectQuestion");
 
-        String question = httpServletRequest.getParameter("question");
+        //String question = httpServletRequest.getParameter("question");
         int questionid = Integer.parseInt(httpServletRequest.getParameter("questionid"));
 
-        List questionList = selfDiagnosisService.selectQuestion(question, questionid);
+        List questionList = selfDiagnosisService.selectQuestion(questionid);
 
         return questionList;
     }

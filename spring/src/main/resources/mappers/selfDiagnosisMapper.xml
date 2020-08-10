@@ -16,7 +16,7 @@
 	-->
 
 	<select id="selectQuestion" parameterType="hashmap" resultType="hashmap">
-		SELECT question FROM question
+		SELECT question FROM testQuestion
 		WHERE questionid = #{questionid}
 	</select>
 	
