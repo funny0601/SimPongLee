@@ -7,10 +7,6 @@
     <font
         android:font = "@font/octninekor2"/>
     <font
-        android:font = "@font/octninekor3"/>
-    <font
-        android:font = "@font/octninekor4"/>
-    <font
         android:font = "@font/sourcesansprobold"/>
     <font
         android:font = "@font/sourcesansproregular"/>
