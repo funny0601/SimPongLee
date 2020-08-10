@@ -1,22 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/home_background">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="홈 화면"
+        android:fontFamily="@font/octninekor1"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:textSize="28dp"/>
+
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="홈 화면"
-            android:fontFamily="@font/octninekor1"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:layout_weight="3"
-            android:textSize="28dp"/>
+        android:layout_height="match_parent"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:paddingTop="10dp"
+        android:orientation="vertical"
+        android:weightSum="8">
+
+        <!--회원정보 조회 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/round_button_home_color1"
+            android:layout_weight="2"
+            android:weightSum="7">
+
+            <ImageButton
+                android:background="@android:color/transparent"
+                android:layout_width="0dp"
+                android:padding="20dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:scaleType="centerInside"
+                android:src="@drawable/user_icon"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:padding="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/handotum"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="18dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="최양락"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/handotum"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:text="님 안녕하세요!"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/handotum"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:text="우울증 진단 등급: "/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/handotum"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:textColor="#C00A32"
+                        android:text="위험"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 나의 자가진단 등급 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/round_button_home_color2"
+            android:layout_weight="2"
+            android:clickable="true"
+            android:id="@+id/diagnosisButton"
+            android:weightSum="4">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:src="@drawable/test_icon"
+                android:paddingStart="10dp"
+                android:scaleType="centerInside"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:text="우울증 진단 테스트"
+                android:gravity="center_vertical"
+                android:textAlignment="textStart"
+                android:paddingStart="15dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/octninekor2"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                tools:ignore="RtlCompat" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/round_button_home_color2"
+            android:layout_weight="2"
+            android:weightSum="4"
+            android:id="@+id/chatbotButton">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:src="@drawable/chatbot_icon"
+                android:scaleType="centerInside"
+                android:paddingStart="10dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:text="심퐁이와 대화하기"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                android:textAlignment="textStart"
+                android:paddingStart="15dp"
+                android:fontFamily="@font/octninekor2"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                tools:ignore="RtlCompat" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/round_button_home_color2"
+            android:layout_weight="2"
+            android:id="@+id/calendarButton"
+            android:weightSum="4">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:src="@drawable/diary_icon"
+                android:paddingStart="10dp"
+                android:scaleType="centerInside"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:textColor="@color/black"
+                android:text="다이어리"
+                android:gravity="center_vertical"
+                android:textAlignment="textStart"
+                android:paddingStart="15dp"
+                android:fontFamily="@font/octninekor2"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                tools:ignore="RtlCompat" />
+
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

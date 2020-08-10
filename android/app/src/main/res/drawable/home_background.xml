@@ -5,9 +5,9 @@
             <solid android:color="@color/colorPrimaryDark" />
         </shape>
     </item>
+
     <item android:top="100dp">
         <shape android:shape="rectangle" >
-            <size android:height="100dp" />
             <solid android:color="@color/white" />
         </shape>
     </item>

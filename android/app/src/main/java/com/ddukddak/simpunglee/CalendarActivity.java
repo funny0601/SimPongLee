@@ -42,7 +42,7 @@ public class CalendarActivity extends AppCompatActivity {
     private static final String TAG_TEXT = "text";
     private static final String TAG_IMAGE = "image";
 
-    ImageButton emojiSelection;
+    ImageButton emojiSelection, backButton;
     Button save_button, edit_button;
     EditText diary_title, diary_content;
     TextView tv_today;
@@ -59,7 +59,16 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        save_button = findViewById(R.id.save_button);
+        // 뒤로가기 버튼
+        backButton =(ImageButton)findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish(); // 뒤로가기
+            }
+        });
+
+        save_button = (Button)findViewById(R.id.save_button);
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +77,7 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
-        edit_button = findViewById(R.id.edit_button);
+        edit_button = (Button)findViewById(R.id.edit_button);
         edit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,10 +93,10 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
-        diary_content = findViewById(R.id.diary_content);
-        diary_title = findViewById(R.id.diary_title);
+        diary_content = (EditText)findViewById(R.id.diary_content);
+        diary_title = (EditText)findViewById(R.id.diary_title);
 
-        emojiSelection = findViewById(R.id.emojiSelection);
+        emojiSelection = (ImageButton)findViewById(R.id.emojiSelection);
         emojiSelection.setClickable(false);
         emojiSelection.setEnabled(false);
         emojiSelection.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +134,8 @@ public class CalendarActivity extends AppCompatActivity {
         // diary_title, diary_content, emojiSelection으로 보여주기
 
         // ActiveDate 다이어리 바로 가져오는 Task 여기에 작성하기
-        setUpdateOption(getDiary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DATE)));
+        // 서버 없을때는 주석처리하기
+        // setUpdateOption(getDiary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DATE)));
 
         datePickerTimeline.setOnDateSelectedListener(new OnDateSelectedListener() {
             @Override
