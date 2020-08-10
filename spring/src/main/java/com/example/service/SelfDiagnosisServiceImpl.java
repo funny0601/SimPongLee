@@ -15,8 +15,8 @@ public class SelfDiagnosisServiceImpl implements SelfDiagnosisService {
 	private SelfDiagnosisDAO dao;
 
 	@Override
-	public List selectQuestion(int questionid) throws Exception {
-		return dao.selectQuestion(questionid);
+	public List selectQuestion(int categoryid) throws Exception {
+		return dao.selectQuestion(categoryid);
 	}
 
 }

@@ -18,11 +18,11 @@ public class SelfDiagnosisDAOImpl implements SelfDiagnosisDAO {
 	private static final String Namespace = "com.example.mapper.selfDiagnosisMapper";
 	
 	@Override
-	public List selectQuestion(int questionid) throws Exception {
+	public List selectQuestion(int categoryid) throws Exception {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		//map.put("question", question);
-		map.put("questionid", questionid);
+		map.put("categoryid", categoryid);
 		return sqlSession.selectList(Namespace + ".selectQuestion", map);
 	}
 

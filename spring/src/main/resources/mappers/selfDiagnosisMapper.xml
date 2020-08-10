@@ -16,8 +16,8 @@
 	-->
 
 	<select id="selectQuestion" parameterType="hashmap" resultType="hashmap">
-		SELECT question FROM testQuestion
-		WHERE questionid = #{questionid}
+		SELECT question FROM selfDiagnosisQuestion
+		WHERE categoryid = #{categoryid}
 	</select>
 	
 </mapper>

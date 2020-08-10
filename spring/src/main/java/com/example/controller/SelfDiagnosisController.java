@@ -26,10 +26,10 @@ public class SelfDiagnosisController {
 
         logger.info("selectQuestion");
 
-        //String question = httpServletRequest.getParameter("question");
-        int questionid = Integer.parseInt(httpServletRequest.getParameter("questionid"));
+        //String category = httpServletRequest.getParameter("category");
+        int categoryid = Integer.parseInt(httpServletRequest.getParameter("categoryid"));
 
-        List questionList = selfDiagnosisService.selectQuestion(questionid);
+        List questionList = selfDiagnosisService.selectQuestion(categoryid);
 
         return questionList;
     }
