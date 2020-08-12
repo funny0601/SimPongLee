@@ -17,8 +17,9 @@
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_centerVertical="true"
+                android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_baseline_dehaze_24" />
+                android:src="@drawable/ic_baseline_home_24" />
         </RelativeLayout>
         <TextView
             android:layout_width="0dp"
