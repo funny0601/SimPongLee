@@ -19,6 +19,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/INDEX.LIST'
+    }
 }
 
 dependencies {
@@ -34,4 +40,7 @@ dependencies {
     implementation 'com.vivekkaushik.datepicker:datePickerTimeline:0.0.4'
     // gson 
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.tyagiabhinav:androiddialogflowchatbot:0.1.8'
+    implementation 'com.google.cloud:google-cloud-dialogflow:2.0.0'
+    implementation 'io.grpc:grpc-okhttp:1.29.0'
 }
