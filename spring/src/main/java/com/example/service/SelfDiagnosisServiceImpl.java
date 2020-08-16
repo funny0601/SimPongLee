@@ -1,6 +1,7 @@
 package com.example.service;
 
-import com.example.dao.CalendarDAO;
+import com.example.dao.SelfDiagnosisDAO;
+import com.example.dto.SelfDiagnosisVO;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -10,11 +11,11 @@ import java.util.List;
 public class SelfDiagnosisServiceImpl implements SelfDiagnosisService {
 
 	@Inject
-	private CalendarDAO dao;
+	private SelfDiagnosisDAO dao;
 
 	@Override
-	public List selectQuestion(String question, int questionid) throws Exception {
-		return dao.selectDiary(question, questionid);
+	public List selectQuestion(int categoryid) throws Exception {
+		return dao.selectQuestion(categoryid);
 	}
 
 }
