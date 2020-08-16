@@ -19,5 +19,9 @@
 		SELECT question FROM selfDiagnosisQuestion
 		WHERE categoryid = #{categoryid}
 	</select>
-	
+
+	<select id="insertDiagnosisResult" parameterType="hashmap" resultType="hashmap">
+		INSERT INTO selfDiagnosisResult(userid, questionCategory, selfDiagnosisScore, selfDiagnosisLevel)
+		VALUES (#{userid}, #{questionCategory}, #{selfDiagnosisScore}, #{selfDiagnosisLevel})
+	</select>
 </mapper>
