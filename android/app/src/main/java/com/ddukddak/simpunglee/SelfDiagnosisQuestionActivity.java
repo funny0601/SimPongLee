@@ -139,7 +139,6 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity {
     private List<String> parseJson(String context){
         JsonParser jsonParser = new JsonParser();
         JsonArray jsonArray = (JsonArray) jsonParser.parse(context);
-        //JsonObject object = (JsonObject) jsonArray.get(0);
 
         List<String> stringList = new ArrayList<>();
 
