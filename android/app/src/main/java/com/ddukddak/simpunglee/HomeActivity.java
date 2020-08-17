@@ -11,18 +11,27 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.api.client.json.Json;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.tyagiabhinav.dialogflowchatlibrary.Chatbot;
 import com.tyagiabhinav.dialogflowchatlibrary.ChatbotActivity;
 import com.tyagiabhinav.dialogflowchatlibrary.ChatbotSettings;
 import com.tyagiabhinav.dialogflowchatlibrary.DialogflowCredentials;
 
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class HomeActivity extends AppCompatActivity {
+    String url = "";
     //private TextView tv_outPut;
 
     LinearLayout diagnosisButton, chatbotButton, calendarButton;
+    TextView diagnosisLevelTv;
+
+    int userid = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +62,19 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        diagnosisButton = (LinearLayout) findViewById(R.id.diagnosisButton);
+        diagnosisButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, SelfDiagnosisQuestionActivity.class);
+                intent.putExtra("userid", userid);
+                startActivity(intent);
+            }
+        });
+
+        diagnosisLevelTv = (TextView)findViewById(R.id.diagnosisLevelTv);
+        diagnosisLevelTv.setText(String.valueOf(getUserLevel(userid)));
     }
 
 
@@ -78,5 +100,42 @@ public class HomeActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    private int getUserLevel(int userid) {
+        ContentValues values = new ContentValues();
+
+        values.put("userid", userid);
+        values.put("categoryid", 1);
+
+        NetworkTask getLevelTask = new NetworkTask(url + "selectLevel", values);
+
+        String receivedData;
+        int returnData = 0;
+
+        try {
+            receivedData = getLevelTask.execute().get();
+            if (receivedData.equals("[]")){
+                returnData = 0;
+            } else{
+                returnData = parseJson(receivedData);
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return returnData;
+    }
+
+    private int parseJson(String context){
+        JsonParser jsonParser = new JsonParser();
+        JsonArray jsonArray = (JsonArray) jsonParser.parse(context);
+        JsonObject object = (JsonObject) jsonArray.get(0);
+
+        int level = object.get("selfDiagnosisLevel").getAsInt();
+
+        return level;
     }
 }
