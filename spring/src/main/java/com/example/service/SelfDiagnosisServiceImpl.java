@@ -18,4 +18,18 @@ public class SelfDiagnosisServiceImpl implements SelfDiagnosisService {
 		return dao.selectQuestion(categoryid);
 	}
 
+	@Override
+	public List selectLevel(int userid, int categoryid) throws Exception {
+		return dao.selectLevel(userid, categoryid);
+	}
+
+//	@Override
+//	public List selectUserScoreExists(int userid, int categoryid) throws Exception {
+//		return dao.selectUserScoreExists(userid, categoryid);
+//	}
+
+	@Override
+	public int insertDiagnosisResult(int userid, int categoryid, int selfDiagnosisScore, int selfDiagnosisLevel) throws Exception {
+		return dao.insertDiagnosisResult(userid, categoryid, selfDiagnosisScore, selfDiagnosisLevel);
+	}
 }
