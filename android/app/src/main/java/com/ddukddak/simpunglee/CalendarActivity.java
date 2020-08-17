@@ -2,8 +2,10 @@ package com.ddukddak.simpunglee;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,7 +37,7 @@ import java.util.concurrent.ExecutionException;
 
 public class CalendarActivity extends AppCompatActivity {
 
-    String url = "http://192.168.35.93:8080/";
+    String url = String.valueOf(R.string.ip_sy_laptop);
 
     private static final String TAG_TEXT = "text";
     private static final String TAG_IMAGE = "image";
@@ -55,6 +57,8 @@ public class CalendarActivity extends AppCompatActivity {
     String[] text = {"HAPPY", "ANGRY", "SAD",
             "GRUMPY", "SLEEPY", "LOVE",
             "CASUAL", "DEAD", "SICK"};
+
+    int clickedImagePosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,11 +142,15 @@ public class CalendarActivity extends AppCompatActivity {
 
         // ActiveDate 다이어리 바로 가져오는 Task 여기에 작성하기
         // 서버 없을때는 아래 문장 주석처리하기
-        // setUpdateOption(getDiary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DATE)));
+        setUpdateOption(getDiary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DATE)));
 
         datePickerTimeline.setOnDateSelectedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(int year, int month, int day, int dayOfWeek) {
+
+                // 날짜를 새로 클릭하면 다이어리 emoji position도 기본으로 변경하기
+                clickedImagePosition = 0;
+
                 // 다이어리 선택된 현재 날짜 저장
                 clickedYear = year;
                 clickedMonth = month;
@@ -178,7 +186,7 @@ public class CalendarActivity extends AppCompatActivity {
             // 저장된 다이어리 내용이 없을 경우
             diary_title.setText("");
             diary_content.setText("");
-            emojiSelection.setImageResource(R.drawable.img_0);
+            emojiSelection.setImageResource(R.drawable.happy);
 
             // 바로 일정 추가할 수 있게
             diary_title.setFocusable(true);
@@ -198,7 +206,9 @@ public class CalendarActivity extends AppCompatActivity {
 
         ContentValues values = new ContentValues();
 
-        values.put("userid", 2); //숫자
+        /****** 여기 USER_ID 변경해야하는 부분 ******/
+
+        values.put("userid", 2);
         values.put("date", date);
 
         NetworkTask getDiaryTask = new NetworkTask(url+"selectDiary", values);
@@ -255,10 +265,12 @@ public class CalendarActivity extends AppCompatActivity {
 
         ContentValues values = new ContentValues();
 
-        values.put("userid", 2); //숫자
+        /****** 여기 USER_ID 변경해야되는 부분 ******/
+
+        values.put("userid", 2);
         values.put("title", String.valueOf(diary_title.getText()));
         values.put("body", String.valueOf(diary_content.getText()));
-        values.put("mood", 8); //숫자
+        values.put("mood", clickedImagePosition); //현재 클릭된 이모지로 저장하기
         values.put("date", date);
 
         NetworkTask saveDiaryTask = new NetworkTask(url+"putDiary", values);
@@ -295,14 +307,17 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 emojiSelection.setImageResource(image[position]);
+                // 클릭되면 새로 클릭된 이미지의 position으로 바뀜
+                clickedImagePosition = position;
                 dialog.dismiss();
             }
         });
-
+// 2131296380
         closeBtn = (ImageButton) view.findViewById(R.id.closeBtn);
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 이모티콘을 클릭하지 않았기 때문에 position 저장하지 않음
                 dialog.dismiss();
             }
         });

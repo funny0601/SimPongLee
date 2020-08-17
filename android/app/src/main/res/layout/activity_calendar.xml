@@ -157,7 +157,7 @@
                 android:id="@+id/emojiSelection"
                 android:scaleType="centerInside"
                 android:background="@android:color/transparent"
-                android:src="@drawable/img_0" />
+                android:src="@drawable/happy" />
 
         </LinearLayout>
 
