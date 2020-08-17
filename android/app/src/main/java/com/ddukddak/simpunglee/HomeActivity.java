@@ -25,7 +25,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class HomeActivity extends AppCompatActivity {
-    String url = "";
+    String url = "http://192.168.35.93:8080/";
     //private TextView tv_outPut;
 
     LinearLayout diagnosisButton, chatbotButton, calendarButton;

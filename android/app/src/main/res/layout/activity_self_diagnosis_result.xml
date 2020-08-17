@@ -1,54 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/diagnosis_start_background">
 
-    <TextView
-        android:id="@+id/depressionScoreTv"
-        android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
-        android:background="@android:color/background_light"
-        android:text="우울증 점수"
-        android:textAlignment="center"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#000000"
-        android:textSize="19dp" />
-
-    <Button
-        android:id="@+id/finishBtn"
+    <LinearLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="119dp"
-        android:background="#01579B"
-        android:text="홈으로 돌아가기"
-        android:textColor="#ffffff" />
+        android:orientation="horizontal"
+        android:weightSum="9">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent">
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_arrow_back_24" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="자가진단"
+            android:fontFamily="@font/octninekor1"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="10dp"
+            android:padding="10dp"
+            android:layout_weight="3"
+            android:textSize="25sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/header"
+        android:id="@+id/textParagh1"
+        android:layout_marginTop="80dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="수고하셨습니다."
+            android:fontFamily="@font/handotum"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:id="@+id/textFirstLine"
+            android:textColor="@color/black"/>
+
+        <!--여기가 사용자 이름 받아서 수정해야 하는 텍스트뷰 -->
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="최양락 님의 진단 결과는.."
+            android:fontFamily="@font/handotum"
+            android:textStyle="bold"
+            android:layout_below="@id/textFirstLine"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <!--여기가 테스트 이름이랑 테스트 점수받아서 수정해야 하는 텍스트뷰 -->
+    <TextView
+        android:layout_below="@id/textParagh1"
+        android:layout_marginTop="100dp"
+        android:id="@+id/depressionScoreTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/handotum"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:text="우울증 점수 총 89점으로"
+        android:textColor="@color/black"/>
+
+    <!--여기가 테스트 진단 결과 등급 받아서 수정해야 하는 텍스트뷰 -->
+    <!-- 여기 depressionLevelTv 아이디가 오타났어요
+     확인하고 activity도 수정하셔야 될 것 같습니다!!-->
 
     <TextView
+        android:layout_below="@id/depressionScoreTv"
+        android:layout_marginTop="25dp"
         android:id="@+id/drpressionLevelTv"
         android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_below="@+id/depressionScoreTv"
-        android:layout_alignEnd="@+id/tvres2"
-        android:layout_alignRight="@+id/tvres2"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/octninekor2"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="22dp"
-        android:layout_marginEnd="40dp"
-        android:background="@android:color/background_light"
-        android:text="우울증 레벨"
         android:textAlignment="center"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#000000"
-        android:textSize="19dp" />
+        android:textSize="50sp"
+        android:text="심각"
+        android:textColor="@color/black"/>
+
+    <!--여기는 진단 결과 등급별로 대충 응원문구 수정해야 하는 텍스트뷰 -->
+    <!-- DB에 카테고리별로 응원문구까지 변경할 필요는 없을 것 같고 -->
+    <!-- 안드 string.xml안에 대충 문장 몇개 넣고 돌려막기 해도 될 것 같아요.-->
+
+    <!-- 여기도 layout_below에 아이디 위에 오타난거 그대로 수정해야됩니당!!-->
+    <TextView
+        android:layout_below="@id/drpressionLevelTv"
+        android:layout_marginTop="30dp"
+        android:id="@+id/depressionCheerText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/handotum"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:text="더욱 자세한 상담이 필요한 상태입니다."
+        android:textColor="@color/black"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/finishBtn"
+        android:background="@drawable/round_button_home_color1"
+        android:text="홈으로 돌아가기"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textSize="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+        android:fontFamily="@font/octninekor2"/>
+
 </RelativeLayout>
+
+
