@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.dto.SelfDiagnosisResultVO;
 import com.example.dto.SelfDiagnosisVO;
 import com.example.service.SelfDiagnosisService;
 import org.slf4j.Logger;
@@ -16,7 +17,7 @@ import java.util.Locale;
 @RestController
 public class SelfDiagnosisController {
 
-    private static final Logger logger = LoggerFactory.getLogger(CalendarController.class);
+    private static final Logger logger = LoggerFactory.getLogger(SelfDiagnosisController.class);
 
     @Inject
     private SelfDiagnosisService selfDiagnosisService;
@@ -32,5 +33,46 @@ public class SelfDiagnosisController {
         List questionList = selfDiagnosisService.selectQuestion(categoryid);
 
         return questionList;
+    }
+
+    @RequestMapping(value = "/selectLevel", method = {RequestMethod.POST,RequestMethod.GET})
+    public List<SelfDiagnosisResultVO> selectLevel(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
+
+        logger.info("selectLevel");
+
+        int userid = Integer.parseInt(httpServletRequest.getParameter("userid"));
+        int categoryid = Integer.parseInt(httpServletRequest.getParameter("categoryid"));
+
+        List levelList = selfDiagnosisService.selectLevel(userid, categoryid);
+
+        return levelList;
+    }
+
+//    @RequestMapping(value = "/selectUserScoreExists", method = {RequestMethod.POST,RequestMethod.GET})
+//    public List<SelfDiagnosisResultVO> selectUserScoreExists(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
+//
+//        logger.info("selectUserScoreExists");
+//
+//        int userid = Integer.parseInt(httpServletRequest.getParameter("userid"));
+//        int categoryid = Integer.parseInt(httpServletRequest.getParameter("categoryid"));
+//
+//        List levelList = selfDiagnosisService.selectUserScoreExists(userid, categoryid);
+//
+//        return levelList;
+//    }
+
+    @RequestMapping(value = "/insertDiagnosisResult", method = {RequestMethod.POST,RequestMethod.GET})
+    public String insertDiagnosisResult(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
+
+        logger.info("insertDiagnosisResult");
+
+        int userid = Integer.parseInt(httpServletRequest.getParameter("userid"));
+        int categoryid = Integer.parseInt(httpServletRequest.getParameter("categoryid"));
+        int selfDiagnosisScore = Integer.parseInt(httpServletRequest.getParameter("selfDiagnosisScore"));
+        int selfDiagnosisLevel = Integer.parseInt(httpServletRequest.getParameter("selfDiagnosisLevel"));
+
+        selfDiagnosisService.insertDiagnosisResult(userid, categoryid, selfDiagnosisScore, selfDiagnosisLevel);
+
+        return "ResultSuccessfullyInserted";
     }
 }
