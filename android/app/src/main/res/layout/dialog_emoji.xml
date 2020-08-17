@@ -4,33 +4,57 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    card_view:cardCornerRadius="20dp"
+    card_view:cardCornerRadius="5dp"
     card_view:cardUseCompatPadding="true">
+
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
         android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="right">
+
+            <ImageButton
+                android:layout_marginRight="10dp"
+                android:id="@+id/closeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_close_24"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textview_alterdialog_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textSize="20dp"
             android:fontFamily="@font/handotum"
             android:textColor="@color/black"
-            android:layout_margin="20dp"
-            android:text="오늘 당신의 기분을 골라주세요"/>
+
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:textStyle="bold"
+            android:text="오늘의 기분을 선택해주세요."/>
 
         <GridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@null"
             android:numColumns="3"
+            android:padding="10dp"
             android:dividerHeight="10dp"
+            android:gravity="center"
             android:id="@+id/gridview_alterdialog_list"/>
-
-    </LinearLayout>
+     </LinearLayout>
 </androidx.cardview.widget.CardView>
 

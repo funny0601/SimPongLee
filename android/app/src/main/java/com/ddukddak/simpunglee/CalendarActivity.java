@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,11 +26,8 @@ import com.google.gson.JsonParser;
 import com.vivekkaushik.datepicker.DatePickerTimeline;
 import com.vivekkaushik.datepicker.OnDateSelectedListener;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +40,7 @@ public class CalendarActivity extends AppCompatActivity {
     private static final String TAG_TEXT = "text";
     private static final String TAG_IMAGE = "image";
 
-    ImageButton emojiSelection, backButton;
+    ImageButton emojiSelection, backButton, closeBtn;
     Button save_button, edit_button;
     EditText diary_title, diary_content;
     TextView tv_today;
@@ -52,9 +48,13 @@ public class CalendarActivity extends AppCompatActivity {
     Intent BWFIntent; // 욕설 필터링
     List<Map<String, Object>> dialogItemList;
 
-    int[] image = {R.drawable.img_0, R.drawable.img_1, R.drawable.img_2,
-            R.drawable.img_3, R.drawable.img_4, R.drawable.img_5,
-            R.drawable.img_6, R.drawable.img_7, R.drawable.img_8};
+    int[] image = {R.drawable.happy, R.drawable.angry, R.drawable.sad,
+            R.drawable.grumpy, R.drawable.sleepy, R.drawable.love,
+            R.drawable.casual, R.drawable.dead, R.drawable.sick};
+
+    String[] text = {"HAPPY", "ANGRY", "SAD",
+            "GRUMPY", "SLEEPY", "LOVE",
+            "CASUAL", "DEAD", "SICK"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +114,7 @@ public class CalendarActivity extends AppCompatActivity {
         {
             Map<String, Object> itemMap = new HashMap<>();
             itemMap.put(TAG_IMAGE, image[i]);
+            itemMap.put(TAG_TEXT, text[i]);
             dialogItemList.add(itemMap);
         }
 
@@ -274,6 +275,7 @@ public class CalendarActivity extends AppCompatActivity {
         stopService(BWFIntent);
     }
 
+
     private void showEmojiDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(CalendarActivity.this);
         LayoutInflater inflater = getLayoutInflater();
@@ -285,14 +287,22 @@ public class CalendarActivity extends AppCompatActivity {
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(CalendarActivity.this, dialogItemList,
                 R.layout.item_emoji,
-                new String[]{TAG_IMAGE},
-                new int[]{R.id.alertDialogItemImageView});
+                new String[]{TAG_IMAGE, TAG_TEXT},
+                new int[]{R.id.alertDialogItemImageView, R.id.alertDialogEmojiName});
 
         gridView.setAdapter(simpleAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 emojiSelection.setImageResource(image[position]);
+                dialog.dismiss();
+            }
+        });
+
+        closeBtn = (ImageButton) view.findViewById(R.id.closeBtn);
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dialog.dismiss();
             }
         });

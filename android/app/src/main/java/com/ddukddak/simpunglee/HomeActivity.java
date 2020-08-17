@@ -38,14 +38,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        diagnosisButton = (LinearLayout) findViewById(R.id.diagnosisButton);
-        diagnosisButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 진단테스트 액티비티로 넘어가기
-            }
-        });
-
         chatbotButton = (LinearLayout) findViewById(R.id.chatbotButton);
         chatbotButton.setOnClickListener(new View.OnClickListener() {
             @Override

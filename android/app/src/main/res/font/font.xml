@@ -10,4 +10,6 @@
         android:font = "@font/sourcesansprobold"/>
     <font
         android:font = "@font/sourcesansproregular"/>
+    <font
+        android:font = "@font/oratorstdmedium"/>
 </font-family>
