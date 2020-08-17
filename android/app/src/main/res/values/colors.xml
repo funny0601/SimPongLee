@@ -3,4 +3,22 @@
     <color name="colorPrimary">#E9E0BE</color>
     <color name="colorPrimaryDark">#476C89</color>
     <color name="colorAccent">#E9C18D</color>
+
+    <!--chatbot-->
+    <color name="userAvatarBG">#3A8ABC</color>
+    <color name="chatPrimary">@color/colorAccent</color>
+    <color name="chatPrimaryFocus">@color/chatPrimary</color>
+    <color name="chatPrimaryPressed">#EBD594</color>
+    <color name="chatPrimaryDisabled">#EBC65C</color>
+    <color name="chatBGnText">#FFFFFF</color>
+    <color name="chatSecondary">#FFFFFF</color>
+    <color name="chatSecondaryFocus">#F1F1F1</color>
+    <color name="chatSecondaryPressed">#E9E9E9</color>
+    <color name="chatSecondaryDisabled">#66FFFFFF</color>
+    <color name="botBGBubbleStroke">@color/colorPrimary</color>
+    <color name="botBGBubble">@color/colorPrimary</color>
+    <color name="userBGBubbleStroke">#CAE4F5</color>
+    <color name="userBGBubble">#CAE4F5</color>
+    <color name="checkbox">#8E8F93</color> <!--입력창-->
+    <color name="statusBarColor">@color/colorPrimaryDark</color> <!--상단 컬러-->
 </resources>

@@ -18,6 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:fontFamily="@font/handotum"
+            android:textColor="@color/black"
             android:layout_margin="20dp"
             android:text="오늘 당신의 기분을 골라주세요"/>
 

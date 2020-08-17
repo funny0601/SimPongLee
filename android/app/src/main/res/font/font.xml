@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <font
+        android:font = "@font/handotum"/>
+    <font
+        android:font = "@font/octninekor1"/>
+    <font
+        android:font = "@font/octninekor2"/>
+    <font
+        android:font = "@font/sourcesansprobold"/>
+    <font
+        android:font = "@font/sourcesansproregular"/>
+</font-family>

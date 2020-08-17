@@ -1,14 +1,21 @@
 package com.ddukddak.simpunglee;
 
-import android.content.Intent;
+import android.content.ContentValues;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.concurrent.ExecutionException;
+
 public class SelfDiagnosisResultActivity extends AppCompatActivity {
+    String url = "";
+
+    private static final String TAG = "SelfDiagnosisResultActivity";
     TextView scoreTv, levelTv;
     Button restartBtn;
 
@@ -19,27 +26,53 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
 
         scoreTv = (TextView)findViewById(R.id.depressionScoreTv);
         levelTv = (TextView)findViewById(R.id.drpressionLevelTv);
-        restartBtn = (Button) findViewById(R.id.restartBtn);
+        restartBtn = (Button) findViewById(R.id.finishBtn);
+
+        int userid = getIntent().getIntExtra("userid", 0);
+        int categoryid = getIntent().getIntExtra("categoryid", 0);
+        int rslt = getIntent().getIntExtra("selfDiagnosisScore", 0);
+        int level = rslt / 5;
 
         StringBuffer scoreSb = new StringBuffer();
-        scoreSb.append("우울증 점수 : " + SelfDiagnosisQuestionActivity.rslt + "\n");
+        scoreSb.append("우울증 점수 : " + rslt + "\n");
         StringBuffer levelSb = new StringBuffer();
-        levelSb.append("진단 레벨 : " + SelfDiagnosisQuestionActivity.rslt / 5 + "\n");
+        levelSb.append("진단 레벨 : " + level + "\n");
         scoreTv.setText(scoreSb);
         levelTv.setText(levelSb);
 
-        SelfDiagnosisQuestionActivity.rslt = 0;
-        SelfDiagnosisQuestionActivity.q = 0;
+        saveResult(userid, categoryid, rslt, level);
+
 
         restartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
-                //Intent in = new Intent(getApplicationContext(), SelfDiagnosisQuestionActivity.class);
-                //startActivity(in);
             }
         });
     }
+    private void saveResult(int userid, int categoryid, int selfDiagnosisScore, int selfDiagnosisLevel) {
+        ContentValues values = new ContentValues();
 
+        Log.d(TAG, String.valueOf(userid));
+        Log.d(TAG, String.valueOf(categoryid));
+        Log.d(TAG, String.valueOf(selfDiagnosisScore));
+        Log.d(TAG, String.valueOf(selfDiagnosisLevel));
+
+        values.put("userid", userid);
+        values.put("categoryid", categoryid);
+        values.put("selfDiagnosisScore", selfDiagnosisScore);
+        values.put("selfDiagnosisLevel", selfDiagnosisLevel);
+
+        NetworkTask saveResultTask = new NetworkTask(url + "insertDiagnosisResult", values);
+
+        try {
+            String response = saveResultTask.execute().get();
+            Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
