@@ -1,9 +1,11 @@
 package com.ddukddak.simpunglee;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -47,7 +49,7 @@ public class CalendarActivity extends AppCompatActivity {
     EditText diary_title, diary_content;
     TextView tv_today;
     int clickedYear = -999 , clickedMonth = -999, clickedDay = -999, clickedDayOfWeek = -999;
-
+    Intent BWFIntent; // 욕설 필터링
     List<Map<String, Object>> dialogItemList;
 
     int[] image = {R.drawable.img_0, R.drawable.img_1, R.drawable.img_2,
@@ -134,7 +136,7 @@ public class CalendarActivity extends AppCompatActivity {
         // diary_title, diary_content, emojiSelection으로 보여주기
 
         // ActiveDate 다이어리 바로 가져오는 Task 여기에 작성하기
-        // 서버 없을때는 주석처리하기
+        // 서버 없을때는 아래 문장 주석처리하기
         // setUpdateOption(getDiary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DATE)));
 
         datePickerTimeline.setOnDateSelectedListener(new OnDateSelectedListener() {
@@ -222,6 +224,24 @@ public class CalendarActivity extends AppCompatActivity {
         // <1, 2> 다이어리 내용 클릭된 날짜, userid, 제목, 내용, 무드 와 함께 서버로 넘기는 부분
         // 서버에서 처리할 것 -> 해당 날짜가 이미 있으면 UPDATE, 없어서 새로 등록하는 거면 INSERT
 
+        // 입력된 내용이 모자랄 경우 예외처리
+        if (diary_title.equals("")){
+            Toast.makeText(CalendarActivity.this, "제목을 입력해주세요", Toast.LENGTH_SHORT).show();
+            return;
+        }else if (diary_content.equals("")){
+            Toast.makeText(CalendarActivity.this, "내용을 입력해주세요", Toast.LENGTH_SHORT).show();
+            return;
+        }else if(diary_title.equals("") && diary_content.equals("")){
+            Toast.makeText(CalendarActivity.this, "제목과 내용을 입력해주세요", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        BWFIntent = new Intent(getApplicationContext(), BadwordFilter.class);
+        BWFIntent.putExtra("TextToFilter", diary_content.getText().toString());
+        System.out.println(diary_content.getText().toString());
+        // Toast.makeText(getApplicationContext(), "되고잇냐?", Toast.LENGTH_LONG).show();
+        startService(BWFIntent);
+
         // 저장버튼 눌렀으니까 수정 못함
         diary_title.setFocusable(false);
         diary_title.setClickable(false);
@@ -242,28 +262,16 @@ public class CalendarActivity extends AppCompatActivity {
 
         NetworkTask saveDiaryTask = new NetworkTask(url+"putDiary", values);
 
-        // 입력된 내용이 모자랄 경우 예외처리
-        if (diary_title.equals("")){
-            Toast.makeText(CalendarActivity.this, "제목을 입력해주세요", Toast.LENGTH_SHORT).show();
-            return;
-        }else if (diary_content.equals("")){
-            Toast.makeText(CalendarActivity.this, "내용을 입력해주세요", Toast.LENGTH_SHORT).show();
-            return;
-        }else if(diary_title.equals("") && diary_content.equals("")){
-            Toast.makeText(CalendarActivity.this, "제목과 내용을 입력해주세요", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         try {
             String response = saveDiaryTask.execute().get();
-            Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+            Log.d("Server Result", response);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-
+        stopService(BWFIntent);
     }
 
     private void showEmojiDialog() {
