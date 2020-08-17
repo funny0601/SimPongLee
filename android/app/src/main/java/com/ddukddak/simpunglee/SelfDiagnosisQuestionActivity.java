@@ -34,26 +34,27 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class SelfDiagnosisQuestionActivity extends AppCompatActivity {
-
-    String url = "http://192.168.123.162:8080/";
+    String url = "";
 
     private static final String TAG = "SelfDiagnosisActivity";
 
-    TextView questionTv;
-    Button submitBtn, quitBtn;
-    RadioGroup answerGrp;
-    RadioButton score4, score3, score2, score1;
+    private int userid;
+
+    private TextView questionTv;
+    private Button submitBtn, quitBtn;
+    private RadioGroup answerGrp;
+    private RadioButton score4, score3, score2, score1;
 
     List<String> questionList;
 
-    public static int q = 0;
-    public static int rslt = 0;
-
+    private int q = 0;
+    private int rslt = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_self_diagnosis_question);
 
+        userid = getIntent().getIntExtra("userid", 0);
         questionList = new ArrayList<>();
 
         questionTv = findViewById(R.id.questionTv);
@@ -78,8 +79,8 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please select one choice", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                RadioButton uans = (RadioButton) findViewById(answerGrp.getCheckedRadioButtonId());
-                String ansText = uans.getText().toString();
+                RadioButton radioGroup = (RadioButton) findViewById(answerGrp.getCheckedRadioButtonId());
+                String ansText = radioGroup.getText().toString();
 
                 if(ansText.equals(score4.getText().toString())) rslt += 4;
                 if(ansText.equals(score3.getText().toString())) rslt += 3;
@@ -95,7 +96,11 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity {
                 else
                 {
                     Intent in = new Intent(getApplicationContext(), SelfDiagnosisResultActivity.class);
+                    in.putExtra("userid", userid);
+                    in.putExtra("categoryid", 1);
+                    in.putExtra("selfDiagnosisScore", rslt);
                     startActivity(in);
+                    finish();
                 }
                 answerGrp.clearCheck();
             }
@@ -104,8 +109,7 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity {
         quitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(), SelfDiagnosisResultActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
     }

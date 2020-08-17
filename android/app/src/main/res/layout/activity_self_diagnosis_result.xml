@@ -21,7 +21,7 @@
         android:textSize="19dp" />
 
     <Button
-        android:id="@+id/restartBtn"
+        android:id="@+id/finishBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -29,7 +29,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="119dp"
         android:background="#01579B"
-        android:text="다시 검사하기"
+        android:text="홈으로 돌아가기"
         android:textColor="#ffffff" />
 
     <TextView
