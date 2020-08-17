@@ -1,6 +1,7 @@
 package com.example.dto;
 
 public class SelfDiagnosisResultVO {
+
     private int userid;
     private int categoryid;
     private int selfDiagnosisScore;
