@@ -20,8 +20,17 @@
 		WHERE categoryid = #{categoryid}
 	</select>
 
+	<select id="selectLevel" parameterType="hashmap" resultType="hashmap">
+		SELECT selfDiagnosisLevel FROM selfDiagnosisResult
+		WHERE userid = #{userid} AND categoryid = #{categoryid}
+	</select>
+
+<!--	<select id="selectUserScoreExists" parameterType="hashmap" resultType="hashmap">-->
+<!--		SELECT EXISTS( SELECT * FROM selfDiagnosisResult WHERE userid = #{userid} AND categoryid = #{categoryid}) AS exist;-->
+<!--	</select>-->
+
 	<select id="insertDiagnosisResult" parameterType="hashmap" resultType="hashmap">
-		INSERT INTO selfDiagnosisResult(userid, questionCategory, selfDiagnosisScore, selfDiagnosisLevel)
-		VALUES (#{userid}, #{questionCategory}, #{selfDiagnosisScore}, #{selfDiagnosisLevel})
+		INSERT INTO selfDiagnosisResult(userid, categoryid, selfDiagnosisScore, selfDiagnosisLevel)
+		VALUES (#{userid}, #{categoryid}, #{selfDiagnosisScore}, #{selfDiagnosisLevel})
 	</select>
 </mapper>

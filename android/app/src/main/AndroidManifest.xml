@@ -15,10 +15,7 @@
         <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name=".CalendarActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize|adjustPan"></activity>
-        <activity android:name=".SelfDiagnosisQuestionActivity"></activity>
-        <activity android:name=".SelfDiagnosisResultActivity"></activity>
-        <activity android:name=".HomeActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize|adjustPan">
+        <activity android:name=".CalendarActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,6 +24,7 @@
         </activity>
         <activity android:name="com.tyagiabhinav.dialogflowchatlibrary.ChatbotActivity"
             android:launchMode="singleTask" />
+        <service android:name=".BadwordFilter"></service>
     </application>
 
 </manifest>
