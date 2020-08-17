@@ -37,7 +37,7 @@ import java.util.concurrent.ExecutionException;
 
 public class CalendarActivity extends AppCompatActivity {
 
-    String url = String.valueOf(R.string.ip_sy_laptop);
+    String url = " ";
 
     private static final String TAG_TEXT = "text";
     private static final String TAG_IMAGE = "image";
@@ -142,7 +142,7 @@ public class CalendarActivity extends AppCompatActivity {
 
         // ActiveDate 다이어리 바로 가져오는 Task 여기에 작성하기
         // 서버 없을때는 아래 문장 주석처리하기
-        setUpdateOption(getDiary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DATE)));
+        // setUpdateOption(getDiary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DATE)));
 
         datePickerTimeline.setOnDateSelectedListener(new OnDateSelectedListener() {
             @Override
