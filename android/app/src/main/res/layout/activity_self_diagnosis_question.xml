@@ -2,94 +2,98 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/DispName"
-        android:textColor="@color/accent_material_light"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+    <!-- header -->
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/DispName"
-        android:layout_alignStart="@+id/DispName"
-        android:id="@+id/testAnswerGrp"
-        android:clickable="true"
-        android:layout_centerVertical="true">
-        <!--android:layout-->
-        <!--android:checkedButton="@+id/radioButton"-->
-
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="항상그렇다"
-            android:id="@+id/scoreRadio4"
-            android:checked="false"
-            />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="자주그렇다"
-            android:id="@+id/scoreRadio3"
-            android:checked="false" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="가끔그렇다"
-            android:id="@+id/scoreRadio2"
-            android:checked="false" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="아니다"
-            android:id="@+id/scoreRadio1"
-            android:checked="false" />
-
-    </RadioGroup>
-
-    <Button
-        android:id="@+id/nextBtn"
+    <LinearLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/testAnswerGrp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="27dp"
-        android:background="@android:color/darker_gray"
-        android:text="Next Question"
-        android:textColor="#ffffff" />
+        android:orientation="horizontal"
+        android:weightSum="9">
 
-    <Button
-        android:id="@+id/quiBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/nextBtn"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="20dp"
-        android:background="@android:color/darker_gray"
-        android:text="Quit"
-        android:textColor="#ffffff" />
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent">
+            <ImageButton
+                android:id="@+id/quiBtn"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_arrow_back_24" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="자가진단"
+            android:fontFamily="@font/octninekor1"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="10dp"
+            android:padding="10dp"
+            android:layout_weight="3"
+            android:textSize="25sp"/>
+    </LinearLayout>
 
-    <TextView
+    <!-- progress bar-->
+
+    <com.daimajia.numberprogressbar.NumberProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Questions"
-        android:id="@+id/questionTv"
-        android:layout_marginBottom="52dp"
-        android:layout_above="@+id/testAnswerGrp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+
+        android:id="@+id/progress_bar"
+        android:layout_below="@id/header"
+        style="@style/NumberProgressBar_Relax_Blue"
+        custom:progress_unreached_color="@color/chatSecondaryPressed"
+        custom:progress_reached_color="@color/colorPrimaryDark"
+
+        custom:progress_unreached_bar_height="28dp"
+        custom:progress_reached_bar_height="28dp"
+
+        custom:progress_text_size="12sp"
+        custom:progress_text_color="@color/colorPrimaryDark"
+        custom:progress_text_offset="5dp"
+        custom:progress_text_visibility="visible"
+
+        custom:progress_max="100"
+        custom:progress_current="0" />
+
+    <LinearLayout
+        android:layout_below="@id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="15"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:overScrollMode="never"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="14" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:id="@+id/submitBtn"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/round_button"
+            android:text="결과보기▶"
+            android:fontFamily="@font/octninekor2"
+            android:textSize="25dp"/>
+    </LinearLayout>
 
 </RelativeLayout>

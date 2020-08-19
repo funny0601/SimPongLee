@@ -2,109 +2,105 @@ package com.ddukddak.simpunglee;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.vivekkaushik.datepicker.DatePickerTimeline;
-import com.vivekkaushik.datepicker.OnDateSelectedListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-public class SelfDiagnosisQuestionActivity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import me.omidh.liquidradiobutton.LiquidRadioButton;
+
+public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements QuestionRecyclerAdapter.ListItemClickListener {
+
     String url = "";
 
     private static final String TAG = "SelfDiagnosisActivity";
 
     private int userid;
+    int problemCount = 0;
 
-    private TextView questionTv;
-    private Button submitBtn, quitBtn;
-    private RadioGroup answerGrp;
-    private RadioButton score4, score3, score2, score1;
+    private Button submitBtn;
+    private ImageButton quitBtn;
 
-    List<String> questionList;
+    private com.daimajia.numberprogressbar.NumberProgressBar progress_bar;
+    List<selfDiagnosisQuestionVO> questionList;
 
-    private int q = 0;
-    private int rslt = 0;
+    private int rslt = -999;
+    private RecyclerView mRecyclerView;
+    LinearLayoutManager mLinearLayoutManager;
+    private QuestionRecyclerAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_self_diagnosis_question);
 
         userid = getIntent().getIntExtra("userid", 0);
-        questionList = new ArrayList<>();
 
-        questionTv = findViewById(R.id.questionTv);
-
-        submitBtn = findViewById(R.id.nextBtn);
+        submitBtn = findViewById(R.id.submitBtn);
         quitBtn = findViewById(R.id.quiBtn);
+        progress_bar = findViewById(R.id.progress_bar);
 
-        answerGrp = findViewById(R.id.testAnswerGrp);
-        score4 = findViewById(R.id.scoreRadio4);
-        score3 = findViewById(R.id.scoreRadio3);
-        score2 = findViewById(R.id.scoreRadio2);
-        score1 = findViewById(R.id.scoreRadio1);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mLinearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
+        QuestionRecyclerAdapter.ListItemClickListener myListener = new QuestionRecyclerAdapter.ListItemClickListener() {
+            @Override
+            public void onListItemClick(int clickItemIndex, int pointSelected) {
+                questionList.get(clickItemIndex).setSelectPoint(pointSelected);
+                System.out.println(questionList.get(clickItemIndex).getQuestion());
+                System.out.println(questionList.get(clickItemIndex).getSelectPoint());
+                // 문제풀면 문제 푼 수 증가시키기
+                problemCount++;
+                progress_bar.setProgress(problemCount*5);
+                mAdapter.notifyDataSetChanged();
+            }
+        };
+
+        // 서버에서 질문 목록 받아서 저장해서 어댑터로 넘기기
         questionList = getQuestion();
+        mAdapter = new QuestionRecyclerAdapter(this, myListener, questionList);
+        mRecyclerView.setAdapter(mAdapter);
 
-       questionTv.setText((q + 1) + ". " + questionList.get(q));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(answerGrp.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(getApplicationContext(), "Please select one choice", Toast.LENGTH_SHORT).show();
+                rslt = mAdapter.getPointSum();
+                if(rslt==-1){
+                    Toast.makeText(getApplicationContext(), "모든 문제를 풀어주세요.", Toast.LENGTH_LONG).show();
                     return;
-                }
-                RadioButton radioGroup = (RadioButton) findViewById(answerGrp.getCheckedRadioButtonId());
-                String ansText = radioGroup.getText().toString();
-
-                if(ansText.equals(score4.getText().toString())) rslt += 4;
-                if(ansText.equals(score3.getText().toString())) rslt += 3;
-                if(ansText.equals(score2.getText().toString())) rslt += 2;
-                if(ansText.equals(score1.getText().toString())) rslt += 1;
-
-                q++;
-
-                if(q < questionList.size())
-                {
-                    questionTv.setText((q + 1) + ". " + questionList.get(q));
                 }
                 else
                 {
                     Intent in = new Intent(getApplicationContext(), SelfDiagnosisResultActivity.class);
+                    System.out.println("최종점수"+rslt);
                     in.putExtra("userid", userid);
                     in.putExtra("categoryid", 1);
                     in.putExtra("selfDiagnosisScore", rslt);
                     startActivity(in);
                     finish();
                 }
-                answerGrp.clearCheck();
             }
         });
+
 
         quitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,9 +108,10 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
-    private List<String> getQuestion() {
+    private List<selfDiagnosisQuestionVO> getQuestion() {
         ContentValues values = new ContentValues();
 
         values.put("categoryid", 1);
@@ -122,7 +119,7 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity {
         NetworkTask getQuestionTask = new NetworkTask(url + "selectQuestion", values);
 
         String receivedData;
-        List<String> returnData = new ArrayList<>();
+        List<selfDiagnosisQuestionVO> returnData = new ArrayList<>();
 
         try {
             receivedData = getQuestionTask.execute().get();
@@ -140,20 +137,29 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity {
         return returnData;
     }
 
-    private List<String> parseJson(String context){
+    private List<selfDiagnosisQuestionVO> parseJson(String context){
+
+        // String ArrayList에서 selfDiagnosisQuestionVO 타입의 List로 바꿨어요
+        // RecyclerView에서 보여주기에는 이게 쬐에끔더 편한거 같더라구여..!?
+
         JsonParser jsonParser = new JsonParser();
         JsonArray jsonArray = (JsonArray) jsonParser.parse(context);
 
-        List<String> stringList = new ArrayList<>();
+        List<selfDiagnosisQuestionVO> questionVOList = new ArrayList<>();
 
         JsonObject q;
         for(int i = 0; i < jsonArray.size(); i++) {
             q = (JsonObject)jsonArray.get(i);
-            stringList.add(q.get("question").getAsString());
+            questionVOList.add(new selfDiagnosisQuestionVO(q.get("question").getAsString()));
         }
+        return questionVOList;
+    }
 
-        return stringList;
+    @Override
+    public void onListItemClick(int clickItemIndex, int pointSelected) {
+        questionList.get(clickItemIndex).setSelectPoint(pointSelected);
+        System.out.println(questionList.get(clickItemIndex).getQuestion());
+        System.out.println(questionList.get(clickItemIndex).getSelectPoint());
+        mAdapter.notifyDataSetChanged();
     }
 }
-
-

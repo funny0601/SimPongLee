@@ -43,4 +43,9 @@ dependencies {
     implementation 'com.tyagiabhinav:androiddialogflowchatbot:0.1.8'
     implementation 'com.google.cloud:google-cloud-dialogflow:2.0.0'
     implementation 'io.grpc:grpc-okhttp:1.29.0'
+    // progress bar
+    implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
+    implementation 'com.github.giangpham96:labeledprogressbarlib:1.0'
+    // radio button
+    implementation 'me.omidh:liquidradiobutton:1.0.01'
 }

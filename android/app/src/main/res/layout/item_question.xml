@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/questionText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:fontFamily="@font/handotum"
+        android:textColor="@color/black"
+        android:layout_margin="8dp"
+        android:text="질문 문항은 여기에" />
+
+
+        <RadioGroup
+            android:id="@+id/testAnswerGrp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+        <me.omidh.liquidradiobutton.LiquidRadioButton
+            android:layout_width="wrap_content"
+            android:id="@+id/scoreRadio4"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:lrb_strokeWidth="1dp"
+            app:lrb_explodeCount="3"
+            android:layout_marginRight="30dp"
+            app:lrb_outterPadding="8dp"
+            app:lrb_innerCircleRadius="15dp"
+            app:lrb_strokeRadius="23dp"
+            app:lrb_inAnimDuration="500"
+            app:lrb_outAnimDuration="500"
+            app:lrb_checkedColor="@android:color/holo_green_dark"
+            app:lrb_unCheckedColor="@android:color/holo_red_light"
+            />
+
+        <me.omidh.liquidradiobutton.LiquidRadioButton
+            android:layout_width="wrap_content"
+            android:id="@+id/scoreRadio3"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:lrb_strokeWidth="1dp"
+            app:lrb_explodeCount="3"
+            app:lrb_outterPadding="8dp"
+            android:layout_marginRight="30dp"
+            app:lrb_innerCircleRadius="15dp"
+            app:lrb_strokeRadius="23dp"
+            app:lrb_inAnimDuration="500"
+            app:lrb_outAnimDuration="500"
+            app:lrb_checkedColor="@android:color/holo_green_dark"
+            app:lrb_unCheckedColor="@android:color/holo_red_light"
+            />
+
+        <me.omidh.liquidradiobutton.LiquidRadioButton
+            android:layout_width="wrap_content"
+            android:id="@+id/scoreRadio2"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:lrb_strokeWidth="1dp"
+            app:lrb_explodeCount="3"
+            app:lrb_outterPadding="8dp"
+            app:lrb_innerCircleRadius="15dp"
+            app:lrb_strokeRadius="23dp"
+            android:layout_marginRight="30dp"
+            app:lrb_inAnimDuration="500"
+            app:lrb_outAnimDuration="500"
+            app:lrb_checkedColor="@android:color/holo_green_dark"
+            app:lrb_unCheckedColor="@android:color/holo_red_light"
+            />
+
+        <me.omidh.liquidradiobutton.LiquidRadioButton
+            android:layout_width="wrap_content"
+            android:id="@+id/scoreRadio1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:lrb_strokeWidth="1dp"
+            app:lrb_explodeCount="3"
+            app:lrb_outterPadding="8dp"
+            app:lrb_innerCircleRadius="15dp"
+            app:lrb_strokeRadius="23dp"
+            app:lrb_inAnimDuration="500"
+
+            app:lrb_outAnimDuration="500"
+            app:lrb_checkedColor="@android:color/holo_green_dark"
+            app:lrb_unCheckedColor="@android:color/holo_red_light"
+            />
+        </RadioGroup>
+
+</LinearLayout>
