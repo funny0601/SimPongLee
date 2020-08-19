@@ -15,6 +15,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -40,6 +41,7 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
     private com.daimajia.numberprogressbar.NumberProgressBar progress_bar;
     List<selfDiagnosisQuestionVO> questionList;
 
+    int [] questionProblemSolved;
     private int rslt = -999;
     private RecyclerView mRecyclerView;
     LinearLayoutManager mLinearLayoutManager;
@@ -67,18 +69,28 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
                 System.out.println(questionList.get(clickItemIndex).getQuestion());
                 System.out.println(questionList.get(clickItemIndex).getSelectPoint());
                 // 문제풀면 문제 푼 수 증가시키기
-                problemCount++;
-                progress_bar.setProgress(problemCount*5);
+                if (questionProblemSolved[clickItemIndex]==0){
+                    questionProblemSolved[clickItemIndex]=1;
+                } // 문제 처음푸는 거면 1로 숫자 올림
+
+                progress_bar.setProgress(sumList(questionProblemSolved)*5);
                 mAdapter.notifyDataSetChanged();
             }
         };
 
         // 서버에서 질문 목록 받아서 저장해서 어댑터로 넘기기
         questionList = getQuestion();
+        questionProblemSolved = new int[questionList.size()];
+        Arrays.fill(questionProblemSolved,0);
+
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(this,
+                        new LinearLayoutManager(this).getOrientation());
+        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recyclerview_divider));
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
+
         mAdapter = new QuestionRecyclerAdapter(this, myListener, questionList);
         mRecyclerView.setAdapter(mAdapter);
-
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +165,14 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
             questionVOList.add(new selfDiagnosisQuestionVO(q.get("question").getAsString()));
         }
         return questionVOList;
+    }
+
+    public int sumList(int[] array){
+        int sum = 0;
+        for(int i:array){
+            sum = sum + i;
+        }
+        return sum;
     }
 
     @Override

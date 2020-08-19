@@ -90,7 +90,7 @@
             android:paddingStart="20dp"
             android:paddingEnd="10dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/round_button"
+            android:background="@drawable/square_button"
             android:text="결과보기▶"
             android:fontFamily="@font/octninekor2"
             android:textSize="25dp"/>

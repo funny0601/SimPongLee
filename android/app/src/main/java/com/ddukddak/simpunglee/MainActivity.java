@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_self_diagnosis_question);
+        setContentView(R.layout.activity_main);
 
         /* xml 작업을 위한 주석 처리
         // 위젯에 대한 참조.
