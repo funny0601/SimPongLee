@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/round_button_home_color1"
+            android:background="@drawable/round_button_square_color1"
             android:layout_weight="2"
             android:weightSum="7">
 
@@ -113,7 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/round_button_home_color2"
+            android:background="@drawable/round_button_square_color2"
             android:layout_weight="2"
             android:weightSum="4"
             android:id="@+id/chatbotButton">
@@ -146,7 +146,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/round_button_home_color2"
+            android:background="@drawable/round_button_square_color2"
             android:layout_weight="2"
             android:clickable="true"
             android:id="@+id/diagnosisButton"
@@ -180,7 +180,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/round_button_home_color2"
+            android:background="@drawable/round_button_square_color2"
             android:layout_weight="2"
             android:id="@+id/calendarButton"
             android:weightSum="4">
@@ -206,8 +206,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 tools:ignore="RtlCompat" />
-
         </LinearLayout>
-
     </LinearLayout>
 </LinearLayout>
