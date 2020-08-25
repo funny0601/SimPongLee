@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         diagnosisLevelTv = (TextView)findViewById(R.id.diagnosisLevelTv);
-        diagnosisLevelTv.setText(String.valueOf(getUserLevel(userid)));
+        diagnosisLevelTv.setText(getUserLevel(userid));
     }
 
 
@@ -94,7 +94,7 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private int getUserLevel(int userid) {
+    private String getUserLevel(int userid) {
         ContentValues values = new ContentValues();
 
         values.put("userid", userid);
@@ -103,12 +103,12 @@ public class HomeActivity extends AppCompatActivity {
         NetworkTask getLevelTask = new NetworkTask(url + "selectLevel", values);
 
         String receivedData;
-        int returnData = 0;
+        String returnData = "";
 
         try {
             receivedData = getLevelTask.execute().get();
             if (receivedData.equals("[]")){
-                returnData = 0;
+                returnData = "";
             } else{
                 returnData = parseJson(receivedData);
             }
@@ -121,12 +121,12 @@ public class HomeActivity extends AppCompatActivity {
         return returnData;
     }
 
-    private int parseJson(String context){
+    private String parseJson(String context){
         JsonParser jsonParser = new JsonParser();
         JsonArray jsonArray = (JsonArray) jsonParser.parse(context);
         JsonObject object = (JsonObject) jsonArray.get(0);
 
-        int level = object.get("selfDiagnosisLevel").getAsInt();
+        String level = object.get("selfDiagnosisLevel").getAsString();
 
         return level;
     }

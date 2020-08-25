@@ -2,4 +2,5 @@
     <string name="app_name">SimPungLee</string>
     <string name="ip_sy_desktop">http://192.168.55.93:8080/</string>
     <string name="ip_sy_laptop">http://192.168.35.93:8080/</string>
+    <string name="ip_ia_laptop">http://192.168.123.162:8090/</string>
 </resources>
