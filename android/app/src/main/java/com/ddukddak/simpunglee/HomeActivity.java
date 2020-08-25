@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -29,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
 
     LinearLayout diagnosisButton, chatbotButton, calendarButton;
     TextView diagnosisLevelTv;
+    String userLevel;
 
     int userid = 1;
 
@@ -69,11 +71,25 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        diagnosisLevelTv = (TextView)findViewById(R.id.diagnosisLevelTv);
-        diagnosisLevelTv.setText(getUserLevel(userid));
+        userLevel = getUserLevel(userid);
+        setLevelTextView(userLevel);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        userLevel = getUserLevel(userid);
+        setLevelTextView(userLevel);
+    }
+
+    protected void setLevelTextView(String level) {
+        diagnosisLevelTv = (TextView)findViewById(R.id.diagnosisLevelTv);
+        diagnosisLevelTv.setText(userLevel);
+        if(userLevel.equals("심각")) diagnosisLevelTv.setTextColor(Color.parseColor("#C00A32"));
+        else if(userLevel.equals("주의")) diagnosisLevelTv.setTextColor(Color.parseColor("#ffd633"));
+        else diagnosisLevelTv.setTextColor(Color.parseColor("#009933"));
+    }
     // 챗봇 뷰 새로 열기
     public void openChatbot(View view) {
         // provide your Dialogflow's Google Credential JSON saved under RAW folder in resources
