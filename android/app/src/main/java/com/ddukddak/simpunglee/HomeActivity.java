@@ -31,9 +31,8 @@ public class HomeActivity extends AppCompatActivity {
     LinearLayout diagnosisButton, chatbotButton, calendarButton;
     TextView diagnosisLevelTv;
     String userLevel;
-
     int userid = 1;
-
+    TextView home_nickname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +41,10 @@ public class HomeActivity extends AppCompatActivity {
 
         // LoginActivity에서 userid를 받아와야해요
         // 그 userid를 여기 userid 변수에 저장해주면 됩니다아
+
+        String nickname = getIntent().getStringExtra("nickname");
+        home_nickname = (TextView)findViewById(R.id.home_nickname);
+        home_nickname.setText(nickname);
 
         chatbotButton = (LinearLayout) findViewById(R.id.chatbotButton);
         chatbotButton.setOnClickListener(new View.OnClickListener() {

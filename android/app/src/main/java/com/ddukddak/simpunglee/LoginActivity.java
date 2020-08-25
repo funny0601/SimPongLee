@@ -1,4 +1,3 @@
-
 package com.ddukddak.simpunglee;
 
         import android.content.ContentValues;
@@ -8,7 +7,6 @@ package com.ddukddak.simpunglee;
         import android.view.View;
         import android.widget.Button;
         import android.widget.EditText;
-        import android.widget.TextView;
         import android.widget.Toast;
 
         import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +15,7 @@ package com.ddukddak.simpunglee;
 
 public class LoginActivity extends AppCompatActivity {
 
-    String url = "http://192.168.0.34:8090/";
+    String url = "http://192.168.56.1:8090/";
 
     EditText login_email;
     EditText login_password;
@@ -52,13 +50,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String et_login_email= login_email.getText().toString();
                 String et_login_password= login_password.getText().toString();
-
                 loginUser(et_login_email, et_login_password);
+
             }
         });
 
     }
-    private void loginUser(String et_login_email, String et_login_password) {
+    private String loginUser(String et_login_email, String et_login_password) {
         ContentValues values = new ContentValues();
 
         values.put("email", et_login_email);
@@ -68,13 +66,28 @@ public class LoginActivity extends AppCompatActivity {
 
         try {
             String check = loginUser.execute().get();
-            Toast.makeText(getApplicationContext(), check+"님 반갑습니다~", Toast.LENGTH_LONG).show();
-            Log.d("tag", check);
+
+            if(check.equals("")) {
+                Toast.makeText(getApplicationContext(),  "이메일과 비밀번호를 확인해주세요.", Toast.LENGTH_LONG).show();
+                Log.d("tag", check);
+                login_email.setText(null);
+                login_password.setText(null);
+                return  "";
+            }
+            if(!check.equals("")){
+                check = check.replaceAll("\"", "");
+
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                intent.putExtra("nickname", check.toString());
+                System.out.println("nickname"+check);
+                startActivity(intent);
+            }
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
+        return et_login_email;
     }
 }

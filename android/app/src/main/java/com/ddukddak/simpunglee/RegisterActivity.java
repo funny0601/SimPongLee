@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutionException;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    String url = "http://192.168.0.34:8090/";
+    String url = "http://192.168.56.1:8090/";
 
     EditText name;
     EditText nickname;
@@ -92,15 +92,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         NetworkTask checkUser = new NetworkTask(url+"checkUser", values);
         try { //닉네임 확인
-            String check = checkUser.execute().get();
-            if(!check.equals("")) {
+            int check = Integer.parseInt(checkUser.execute().get());
+            if(check ==1 ) {
                 Toast.makeText(getApplicationContext(),  "이미 있는 닉네임입니다.", Toast.LENGTH_LONG).show();
-                Log.d("tag", check);
                 return " ";
             }
-            if(check.equals("")) {
+            if(check==0) {
                 Toast.makeText(getApplicationContext(),  "사용하실 수 있는 닉네임입니다.", Toast.LENGTH_LONG).show();
-                Log.d("tag", check);
             }
         } catch (ExecutionException e) {
             e.printStackTrace();
