@@ -8,16 +8,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.concurrent.ExecutionException;
 
 public class SelfDiagnosisResultActivity extends AppCompatActivity {
 
-    String url = "http://192.168.123.162:8090/";
+    String url = "http://3.35.65.128:8080/simponglee/";
 
     private static final String TAG = "SelfDiagnosisResultActivity";
-    TextView scoreTv, levelTv;
+    TextView scoreTv, levelTv, commentTv;
     Button restartBtn;
 
     @Override
@@ -26,7 +28,8 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_self_diagnosis_result);
 
         scoreTv = (TextView)findViewById(R.id.depressionScoreTv);
-        levelTv = (TextView)findViewById(R.id.drpressionLevelTv);
+        levelTv = (TextView)findViewById(R.id.depressionLevelTv);
+        commentTv = (TextView)findViewById(R.id.depressionCheerText);
         restartBtn = (Button) findViewById(R.id.finishBtn);
 
         int userid = getIntent().getIntExtra("userid", 0);
@@ -42,6 +45,7 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
         scoreSb.append("우울증 점수 : " + rslt + "\n");
         StringBuffer levelSb = new StringBuffer();
         levelSb.append("진단 레벨 : " + level + "\n");
+
         scoreTv.setText(scoreSb);
         levelTv.setText(levelSb);
 

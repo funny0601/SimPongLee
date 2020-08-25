@@ -25,8 +25,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class HomeActivity extends AppCompatActivity {
-    String url = "http://192.168.123.162:8090/";
-    //private TextView tv_outPut;
+    String url = "http://3.35.65.128:8080/simponglee/";
 
     LinearLayout diagnosisButton, chatbotButton, calendarButton;
     TextView diagnosisLevelTv;
@@ -37,6 +36,10 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
+        // LoginActivity에서 userid를 받아와야해요
+        // 그 userid를 여기 userid 변수에 저장해주면 됩니다아
 
         chatbotButton = (LinearLayout) findViewById(R.id.chatbotButton);
         chatbotButton.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +54,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, CalendarActivity.class);
+                // userid도 같이 캘린터 액티비티로 넘겨주세요!
                 startActivity(intent);
             }
         });

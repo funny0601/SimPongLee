@@ -59,11 +59,14 @@ public class CalendarActivity extends AppCompatActivity {
             "CASUAL", "DEAD", "SICK"};
 
     int clickedImagePosition = 0;
+    int userid = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+
+        // HomeActivity에서 userid를 받아와야 합니다아!
 
         // 뒤로가기 버튼
         backButton =(ImageButton)findViewById(R.id.backButton);
@@ -142,7 +145,7 @@ public class CalendarActivity extends AppCompatActivity {
 
         // ActiveDate 다이어리 바로 가져오는 Task 여기에 작성하기
         // 서버 없을때는 아래 문장 주석처리하기
-        // setUpdateOption(getDiary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DATE)));
+        setUpdateOption(getDiary(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DATE)));
 
         datePickerTimeline.setOnDateSelectedListener(new OnDateSelectedListener() {
             @Override
@@ -206,9 +209,7 @@ public class CalendarActivity extends AppCompatActivity {
 
         ContentValues values = new ContentValues();
 
-        /****** 여기 USER_ID 변경해야하는 부분 ******/
-
-        values.put("userid", 2);
+        values.put("userid", userid);
         values.put("date", date);
 
         NetworkTask getDiaryTask = new NetworkTask(url+"selectDiary", values);
@@ -265,9 +266,7 @@ public class CalendarActivity extends AppCompatActivity {
 
         ContentValues values = new ContentValues();
 
-        /****** 여기 USER_ID 변경해야되는 부분 ******/
-
-        values.put("userid", 2);
+        values.put("userid", userid);
         values.put("title", String.valueOf(diary_title.getText()));
         values.put("body", String.valueOf(diary_content.getText()));
         values.put("mood", clickedImagePosition); //현재 클릭된 이모지로 저장하기

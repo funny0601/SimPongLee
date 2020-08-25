@@ -25,7 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements QuestionRecyclerAdapter.ListItemClickListener {
 
-    String url = "http://192.168.123.162:8090/";
+    String url = "http://3.35.65.128:8080/simponglee/";
 
     private static final String TAG = "SelfDiagnosisActivity";
 
