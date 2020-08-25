@@ -13,7 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.concurrent.ExecutionException;
 
 public class SelfDiagnosisResultActivity extends AppCompatActivity {
-    String url = "";
+
+    String url = "http://192.168.123.162:8090/";
 
     private static final String TAG = "SelfDiagnosisResultActivity";
     TextView scoreTv, levelTv;
@@ -31,7 +32,11 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
         int userid = getIntent().getIntExtra("userid", 0);
         int categoryid = getIntent().getIntExtra("categoryid", 0);
         int rslt = getIntent().getIntExtra("selfDiagnosisScore", 0);
-        int level = rslt / 5;
+        String level = "";
+
+        if(rslt >= 60) level = "심각";
+        else if(rslt >= 30) level = "주의";
+        else level = "관심";
 
         StringBuffer scoreSb = new StringBuffer();
         scoreSb.append("우울증 점수 : " + rslt + "\n");
@@ -42,7 +47,6 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
 
         saveResult(userid, categoryid, rslt, level);
 
-
         restartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,7 +54,7 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
             }
         });
     }
-    private void saveResult(int userid, int categoryid, int selfDiagnosisScore, int selfDiagnosisLevel) {
+    private void saveResult(int userid, int categoryid, int selfDiagnosisScore, String selfDiagnosisLevel) {
         ContentValues values = new ContentValues();
 
         Log.d(TAG, String.valueOf(userid));
@@ -63,7 +67,7 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
         values.put("selfDiagnosisScore", selfDiagnosisScore);
         values.put("selfDiagnosisLevel", selfDiagnosisLevel);
 
-        NetworkTask saveResultTask = new NetworkTask(url + "insertDiagnosisResult", values);
+        NetworkTask saveResultTask = new NetworkTask(url + "putResult", values);
 
         try {
             String response = saveResultTask.execute().get();

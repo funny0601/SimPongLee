@@ -18,8 +18,8 @@ import me.omidh.liquidradiobutton.LiquidRadioButton;
 public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecyclerAdapter.QuestionViewHolder> {
 
     Context mContext;
-    List<selfDiagnosisQuestionVO> questionVOList = new ArrayList<>();
-    selfDiagnosisQuestionVO questionData;
+    List<SelfDiagnosisQuestionVO> questionVOList = new ArrayList<>();
+    SelfDiagnosisQuestionVO questionData;
     RecyclerView recyclerView;
 
     //instance of interface created
@@ -34,7 +34,7 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
     }
 
 
-    public QuestionRecyclerAdapter(Context context, ListItemClickListener myOnClickListener, List<selfDiagnosisQuestionVO> questionVOList) {
+    public QuestionRecyclerAdapter(Context context, ListItemClickListener myOnClickListener, List<SelfDiagnosisQuestionVO> questionVOList) {
         this.mContext = context;
         this.questionVOList = questionVOList;
         this.myOnClickListener = myOnClickListener;

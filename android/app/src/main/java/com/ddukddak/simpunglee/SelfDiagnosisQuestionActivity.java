@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -16,7 +15,6 @@ import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -24,11 +22,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import me.omidh.liquidradiobutton.LiquidRadioButton;
 
 public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements QuestionRecyclerAdapter.ListItemClickListener {
 
-    String url = "";
+    String url = "http://192.168.123.162:8090/";
 
     private static final String TAG = "SelfDiagnosisActivity";
 
@@ -39,7 +36,7 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
     private ImageButton quitBtn;
 
     private com.daimajia.numberprogressbar.NumberProgressBar progress_bar;
-    List<selfDiagnosisQuestionVO> questionList;
+    List<SelfDiagnosisQuestionVO> questionList;
 
     int [] questionProblemSolved;
     private int rslt = -999;
@@ -61,6 +58,7 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mLinearLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
+
 
         QuestionRecyclerAdapter.ListItemClickListener myListener = new QuestionRecyclerAdapter.ListItemClickListener() {
             @Override
@@ -123,7 +121,7 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
 
     }
 
-    private List<selfDiagnosisQuestionVO> getQuestion() {
+    private List<SelfDiagnosisQuestionVO> getQuestion() {
         ContentValues values = new ContentValues();
 
         values.put("categoryid", 1);
@@ -131,7 +129,7 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
         NetworkTask getQuestionTask = new NetworkTask(url + "selectQuestion", values);
 
         String receivedData;
-        List<selfDiagnosisQuestionVO> returnData = new ArrayList<>();
+        List<SelfDiagnosisQuestionVO> returnData = new ArrayList<>();
 
         try {
             receivedData = getQuestionTask.execute().get();
@@ -149,7 +147,7 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
         return returnData;
     }
 
-    private List<selfDiagnosisQuestionVO> parseJson(String context){
+    private List<SelfDiagnosisQuestionVO> parseJson(String context){
 
         // String ArrayList에서 selfDiagnosisQuestionVO 타입의 List로 바꿨어요
         // RecyclerView에서 보여주기에는 이게 쬐에끔더 편한거 같더라구여..!?
@@ -157,12 +155,12 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
         JsonParser jsonParser = new JsonParser();
         JsonArray jsonArray = (JsonArray) jsonParser.parse(context);
 
-        List<selfDiagnosisQuestionVO> questionVOList = new ArrayList<>();
+        List<SelfDiagnosisQuestionVO> questionVOList = new ArrayList<>();
 
         JsonObject q;
         for(int i = 0; i < jsonArray.size(); i++) {
             q = (JsonObject)jsonArray.get(i);
-            questionVOList.add(new selfDiagnosisQuestionVO(q.get("question").getAsString()));
+            questionVOList.add(new SelfDiagnosisQuestionVO(q.get("question").getAsString()));
         }
         return questionVOList;
     }

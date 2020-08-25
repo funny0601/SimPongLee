@@ -1,7 +1,6 @@
 package com.example.controller;
 
-import com.example.dto.SelfDiagnosisResultVO;
-import com.example.dto.SelfDiagnosisVO;
+import com.example.dto.QuestionVO;
 import com.example.service.SelfDiagnosisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,57 +21,42 @@ public class SelfDiagnosisController {
     @Inject
     private SelfDiagnosisService selfDiagnosisService;
 
-    @RequestMapping(value = "/selectQuestion", method = {RequestMethod.POST,RequestMethod.GET})
-    public List<SelfDiagnosisVO> selectQuestion(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
-
-        logger.info("selectQuestion");
-
-        //String category = httpServletRequest.getParameter("category");
-        int categoryid = Integer.parseInt(httpServletRequest.getParameter("categoryid"));
-
-        List questionList = selfDiagnosisService.selectQuestion(categoryid);
-
-        return questionList;
-    }
-
-    @RequestMapping(value = "/selectLevel", method = {RequestMethod.POST,RequestMethod.GET})
-    public List<SelfDiagnosisResultVO> selectLevel(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
-
-        logger.info("selectLevel");
-
-        int userid = Integer.parseInt(httpServletRequest.getParameter("userid"));
-        int categoryid = Integer.parseInt(httpServletRequest.getParameter("categoryid"));
-
-        List levelList = selfDiagnosisService.selectLevel(userid, categoryid);
-
-        return levelList;
-    }
-
-//    @RequestMapping(value = "/selectUserScoreExists", method = {RequestMethod.POST,RequestMethod.GET})
-//    public List<SelfDiagnosisResultVO> selectUserScoreExists(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
+//    @RequestMapping(value = "/selectLevel", method = {RequestMethod.POST,RequestMethod.GET})
+//    public List<SelfDiagnosisResultVO> selectLevel(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
 //
-//        logger.info("selectUserScoreExists");
+//        logger.info("selectLevel");
 //
 //        int userid = Integer.parseInt(httpServletRequest.getParameter("userid"));
 //        int categoryid = Integer.parseInt(httpServletRequest.getParameter("categoryid"));
 //
-//        List levelList = selfDiagnosisService.selectUserScoreExists(userid, categoryid);
+//        List levelList = selfDiagnosisService.selectLevel(userid, categoryid);
 //
 //        return levelList;
 //    }
 
-    @RequestMapping(value = "/insertDiagnosisResult", method = {RequestMethod.POST,RequestMethod.GET})
-    public String insertDiagnosisResult(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
+    @RequestMapping(value = "/putResult", method = {RequestMethod.POST,RequestMethod.GET})
+    public String putResult(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
 
-        logger.info("insertDiagnosisResult");
+        logger.info("putResult");
+
+        String status = null;
 
         int userid = Integer.parseInt(httpServletRequest.getParameter("userid"));
         int categoryid = Integer.parseInt(httpServletRequest.getParameter("categoryid"));
         int selfDiagnosisScore = Integer.parseInt(httpServletRequest.getParameter("selfDiagnosisScore"));
-        int selfDiagnosisLevel = Integer.parseInt(httpServletRequest.getParameter("selfDiagnosisLevel"));
+        String selfDiagnosisLevel = httpServletRequest.getParameter("selfDiagnosisLevel");
 
-        selfDiagnosisService.insertDiagnosisResult(userid, categoryid, selfDiagnosisScore, selfDiagnosisLevel);
+        List resultList = selfDiagnosisService.selectResult(userid, categoryid);
 
-        return "ResultSuccessfullyInserted";
+        if (resultList.isEmpty()) {
+            logger.info("해당 유저의 카테고리 점수가 비어있습니다 -> insert");
+            selfDiagnosisService.insertResult(userid, categoryid, selfDiagnosisScore, selfDiagnosisLevel);
+            status = "finished insert";
+        }else {
+            logger.info("해당 유저의 카테고리 점수가 이미 있습니다 -> update");
+            selfDiagnosisService.updateResult(userid, categoryid, selfDiagnosisScore, selfDiagnosisLevel);
+            status = "finished update";
+        }
+        return status;
     }
 }

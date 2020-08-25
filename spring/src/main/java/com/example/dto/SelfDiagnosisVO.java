@@ -1,19 +1,18 @@
 package com.example.dto;
 
 public class SelfDiagnosisVO {
-    private int questionid;
+    private int userid;
     private int categoryid;
-    private String question;
+    private int selfDiagnosisScore;
+    private String selfDiagnosisLevel;
 
-    public int getQuestionid() { return questionid; }
+    public int getUserid() { return userid; }
     public int getCategoryid() { return categoryid; }
-    public String getQuestion() {
-        return question;
-    }
+    public int getSelfDiagnosisScore() { return selfDiagnosisScore; }
+    public String getSelfDiagnosisLevel() { return selfDiagnosisLevel; }
 
-    public void setQuestionid(int questionid) { this.questionid = questionid; }
+    public void setUserid(int userid) { this.userid = userid; }
     public void setCategoryid(int categoryid) { this.categoryid = categoryid; }
-    public void setQuestion(String question) {
-        this.question = question;
-    }
+    public void setSelfDiagnosisScore(int selfDiagnosisScore) { this.selfDiagnosisScore = selfDiagnosisScore; }
+    public void setSelfDiagnosisLevel(String selfDiagnosisLevel) { this.selfDiagnosisLevel = selfDiagnosisLevel; }
 }

@@ -5,32 +5,23 @@
 
 <mapper namespace="com.example.mapper.selfDiagnosisMapper">
 
-	<!-- 
-		mybatis-config.xml의 typeAlias에 등록해두지 않았다면 
-		
-		<select id="selectMember" resultType="com.example.dto.MemberVO" >
-			SELECT ID, PW ,NAME FROM TEST
-		</select>
-		
-		이렇게 해야 한다.
-	-->
+<!--	<select id="selectLevel" parameterType="hashmap" resultType="hashmap">-->
+<!--		SELECT selfDiagnosisLevel FROM selfDiagnosisResult-->
+<!--		WHERE userid = #{userid} AND categoryid = #{categoryid}-->
+<!--	</select>-->
 
-	<select id="selectQuestion" parameterType="hashmap" resultType="hashmap">
-		SELECT question FROM selfDiagnosisQuestion
-		WHERE categoryid = #{categoryid}
-	</select>
-
-	<select id="selectLevel" parameterType="hashmap" resultType="hashmap">
-		SELECT selfDiagnosisLevel FROM selfDiagnosisResult
+	<select id="selectResult" parameterType="hashmap" resultType="hashmap">
+		SELECT selfDiagnosisScore, selfDiagnosisLevel FROM selfDiagnosisResult
 		WHERE userid = #{userid} AND categoryid = #{categoryid}
 	</select>
 
-<!--	<select id="selectUserScoreExists" parameterType="hashmap" resultType="hashmap">-->
-<!--		SELECT EXISTS( SELECT * FROM selfDiagnosisResult WHERE userid = #{userid} AND categoryid = #{categoryid}) AS exist;-->
-<!--	</select>-->
-
-	<select id="insertDiagnosisResult" parameterType="hashmap" resultType="hashmap">
+	<insert id="insertResult">
 		INSERT INTO selfDiagnosisResult(userid, categoryid, selfDiagnosisScore, selfDiagnosisLevel)
 		VALUES (#{userid}, #{categoryid}, #{selfDiagnosisScore}, #{selfDiagnosisLevel})
-	</select>
+	</insert>
+
+	<update id="updateResult">
+		UPDATE selfDiagnosisResult SET selfDiagnosisScore = #{selfDiagnosisScore}, selfDiagnosisLevel = #{selfDiagnosisLevel}
+		WHERE userid = #{userid} AND categoryid = #{categoryid}
+	</update>
 </mapper>
