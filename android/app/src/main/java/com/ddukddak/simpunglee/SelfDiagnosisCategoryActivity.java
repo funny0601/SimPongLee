@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SelfDiagnosisCategoryActivity extends AppCompatActivity {
 
-    String url = "http://192.168.123.162:8080/";
+    String url = "http://3.35.65.128:8080/simponglee/";
 
     int userid;
     @Override

@@ -2,6 +2,7 @@ package com.ddukddak.simpunglee;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +22,7 @@ import java.util.concurrent.ExecutionException;
 
 public class SelfDiagnosisResultActivity extends AppCompatActivity {
 
-    String url = "http://192.168.123.162:8080/";
+    String url = "http://3.35.65.128:8080/simponglee/";
 
     private static final String TAG = "SelfDiagnosisResultActivity";
     TextView scoreTv, levelTv, commentTv;
@@ -49,12 +50,15 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
         else level = "관심";
 
         StringBuffer scoreSb = new StringBuffer();
-        scoreSb.append("우울증 점수 : " + rslt + "\n");
-        StringBuffer levelSb = new StringBuffer();
-        levelSb.append("진단 레벨 : " + level + "\n");
+        scoreSb.append("우울증 점수 : " + rslt);
 
         scoreTv.setText(scoreSb);
-        levelTv.setText(levelSb);
+        levelTv.setText(level);
+
+        if(level.equals("심각")) levelTv.setTextColor(Color.parseColor("#C00A32"));
+        else if(level.equals("주의")) levelTv.setTextColor(Color.parseColor("#ffd633"));
+        else levelTv.setTextColor(Color.parseColor("#009933"));
+
         commentTv.setText(getComment(categoryid, level));
 
         saveResult(userid, categoryid, rslt, level);
