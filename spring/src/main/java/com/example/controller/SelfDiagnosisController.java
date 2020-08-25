@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.dto.QuestionVO;
+import com.example.dto.SelfDiagnosisVO;
 import com.example.service.SelfDiagnosisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,18 +21,31 @@ public class SelfDiagnosisController {
     @Inject
     private SelfDiagnosisService selfDiagnosisService;
 
-//    @RequestMapping(value = "/selectLevel", method = {RequestMethod.POST,RequestMethod.GET})
-//    public List<SelfDiagnosisResultVO> selectLevel(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
-//
-//        logger.info("selectLevel");
-//
-//        int userid = Integer.parseInt(httpServletRequest.getParameter("userid"));
-//        int categoryid = Integer.parseInt(httpServletRequest.getParameter("categoryid"));
-//
-//        List levelList = selfDiagnosisService.selectLevel(userid, categoryid);
-//
-//        return levelList;
-//    }
+    @RequestMapping(value = "/selectLevel", method = {RequestMethod.POST,RequestMethod.GET})
+    public List<SelfDiagnosisVO> selectLevel(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
+
+        logger.info("selectLevel");
+
+        int userid = Integer.parseInt(httpServletRequest.getParameter("userid"));
+        int categoryid = Integer.parseInt(httpServletRequest.getParameter("categoryid"));
+
+        List levelList = selfDiagnosisService.selectLevel(userid, categoryid);
+
+        return levelList;
+    }
+
+    @RequestMapping(value = "/selectResult", method = {RequestMethod.POST,RequestMethod.GET})
+    public List<SelfDiagnosisVO> selectResult(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
+
+        logger.info("selectResult");
+
+        int userid = Integer.parseInt(httpServletRequest.getParameter("userid"));
+        int categoryid = Integer.parseInt(httpServletRequest.getParameter("categoryid"));
+
+        List levelList = selfDiagnosisService.selectResult(userid, categoryid);
+
+        return levelList;
+    }
 
     @RequestMapping(value = "/putResult", method = {RequestMethod.POST,RequestMethod.GET})
     public String putResult(Locale locale, HttpServletRequest httpServletRequest) throws Exception{

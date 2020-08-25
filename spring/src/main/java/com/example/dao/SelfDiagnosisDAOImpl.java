@@ -13,8 +13,16 @@ public class SelfDiagnosisDAOImpl implements SelfDiagnosisDAO {
 
 	@Inject
 	private SqlSession sqlSession;
-	
+
 	private static final String Namespace = "com.example.mapper.selfDiagnosisMapper";
+
+	@Override
+	public List selectLevel(int userid, int categoryid) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userid", userid);
+		map.put("categoryid", categoryid);
+		return sqlSession.selectList(Namespace+".selectLevel", map);
+	}
 
 	@Override
 	public List selectResult(int userid, int categoryid) throws Exception {

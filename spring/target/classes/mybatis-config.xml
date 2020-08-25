@@ -8,6 +8,7 @@
 			<typeAlias type="com.example.dto.CalendarVO" alias="CalendarVO"/>
 			<typeAlias type="com.example.dto.SelfDiagnosisVO" alias="SelfDiagnosisVO"/>
 			<typeAlias type="com.example.dto.QuestionVO" alias="QuestionVO"/>
+			<typeAlias type="com.example.dto.CommentVO" alias="CommentVO"/>
 		</typeAliases>
 
 	</configuration>

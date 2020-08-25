@@ -13,16 +13,21 @@ import org.w3c.dom.Text;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.util.concurrent.ExecutionException;
 
 public class SelfDiagnosisResultActivity extends AppCompatActivity {
 
-    String url = "http://3.35.65.128:8080/simponglee/";
+    String url = "http://192.168.123.162:8080/";
 
     private static final String TAG = "SelfDiagnosisResultActivity";
     TextView scoreTv, levelTv, commentTv;
     Button finishBtn, redoBtn;
     int userid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +55,7 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
 
         scoreTv.setText(scoreSb);
         levelTv.setText(levelSb);
+        commentTv.setText(getComment(categoryid, level));
 
         saveResult(userid, categoryid, rslt, level);
 
@@ -69,6 +75,44 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
             }
         });
     }
+
+    private String getComment(int categoryid, String selfDiagnosisLevel) {
+        ContentValues values = new ContentValues();
+
+        values.put("categoryid", categoryid);
+        values.put("selfDiagnosisLevel", selfDiagnosisLevel);
+
+        NetworkTask getCommentTask = new NetworkTask(url + "selectComment", values);
+
+        String receivedData;
+        String returnData = "";
+
+        try {
+            receivedData = getCommentTask.execute().get();
+            if (receivedData.equals("[]")){
+                returnData = "";
+            } else{
+                returnData = parseJson(receivedData);
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return returnData;
+    }
+
+    private String parseJson(String context){
+        JsonParser jsonParser = new JsonParser();
+        JsonArray jsonArray = (JsonArray) jsonParser.parse(context);
+        JsonObject object = (JsonObject) jsonArray.get(0);
+
+        String level = object.get("levelComment").getAsString();
+
+        return level;
+    }
+
     private void saveResult(int userid, int categoryid, int selfDiagnosisScore, String selfDiagnosisLevel) {
         ContentValues values = new ContentValues();
 
