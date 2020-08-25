@@ -1,6 +1,7 @@
 package com.ddukddak.simpunglee;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,8 +21,8 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
 
     private static final String TAG = "SelfDiagnosisResultActivity";
     TextView scoreTv, levelTv, commentTv;
-    Button restartBtn;
-
+    Button finishBtn, redoBtn;
+    int userid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,9 +31,10 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
         scoreTv = (TextView)findViewById(R.id.depressionScoreTv);
         levelTv = (TextView)findViewById(R.id.depressionLevelTv);
         commentTv = (TextView)findViewById(R.id.depressionCheerText);
-        restartBtn = (Button) findViewById(R.id.finishBtn);
+        finishBtn = (Button) findViewById(R.id.finishBtn);
+        redoBtn = (Button) findViewById(R.id.redoBtn);
 
-        int userid = getIntent().getIntExtra("userid", 0);
+        userid = getIntent().getIntExtra("userid", 0);
         int categoryid = getIntent().getIntExtra("categoryid", 0);
         int rslt = getIntent().getIntExtra("selfDiagnosisScore", 0);
         String level = "";
@@ -51,9 +53,18 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
 
         saveResult(userid, categoryid, rslt, level);
 
-        restartBtn.setOnClickListener(new View.OnClickListener() {
+        finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
+            }
+        });
+        redoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in  = new Intent(getApplicationContext(), SelfDiagnosisCategoryActivity.class);
+                in.putExtra("userid", userid);
+                startActivity(in);
                 finish();
             }
         });
