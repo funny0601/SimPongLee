@@ -6,6 +6,11 @@
 <mapper namespace="com.example.mapper.selfDiagnosisMapper">
 
 	<select id="selectLevel" parameterType="hashmap" resultType="hashmap">
+		SELECT categoryid, selfDiagnosisLevel FROM selfDiagnosisResult
+		WHERE userid = #{userid}
+	</select>
+
+	<select id="selectStartLevel" parameterType="hashmap" resultType="hashmap">
 		SELECT selfDiagnosisLevel FROM selfDiagnosisResult
 		WHERE userid = #{userid} AND categoryid = #{categoryid}
 	</select>
