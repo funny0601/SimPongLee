@@ -1,10 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/mainText"
-        android:layout_width="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
+
+    <!-- header -->
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="카테고리 선택 화면"/>
-</LinearLayout>
+        android:orientation="horizontal"
+        android:weightSum="9">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent">
+            <ImageButton
+                android:id="@+id/quiBtn"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_arrow_back_24" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="자가진단"
+            android:fontFamily="@font/octninekor1"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="10dp"
+            android:padding="10dp"
+            android:layout_weight="3"
+            android:textSize="25sp"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/guide_text"
+        android:layout_marginTop="60dp"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:fontFamily="@font/handotum"
+        android:textColor="@color/black"
+        android:layout_below="@id/header"
+        android:text="상세한 자가진단을 진행하고 싶은\n카테고리를 선택해주세요" />
+
+
+    <GridLayout
+        android:id="@+id/category_list"
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/guide_text"
+        android:layout_above="@id/btn_review"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="40dp"
+        android:columnCount="2"
+        android:rowCount="2">
+
+            <Button
+                android:background="@drawable/round_button_square_color1"
+                android:text="우울증"
+                android:layout_width="170dp"
+                android:layout_height="150dp"
+                android:fontFamily="@font/octninekor2"
+                android:textSize="35dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="35dp"
+                android:paddingBottom="35dp"
+                android:layout_marginEnd="30dp"/>
+
+            <Button
+                android:background="@drawable/round_button_square_color2"
+                android:text="ADHD"
+                android:layout_width="170dp"
+                android:layout_height="150dp"
+                android:fontFamily="@font/octninekor2"
+                android:textSize="35dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="35dp"
+                android:paddingBottom="35dp"
+                android:layout_marginBottom="60dp"/>
+
+            <Button
+                android:background="@drawable/round_button_square_color2"
+                android:text="스트레스"
+                android:layout_width="170dp"
+                android:layout_height="150dp"
+                android:fontFamily="@font/octninekor2"
+                android:textSize="35dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="35dp"
+                android:paddingBottom="35dp"
+                android:layout_marginEnd="30dp"/>
+
+            <Button
+                android:background="@drawable/round_button_square_color1"
+                android:text="공황장애"
+                android:layout_width="170dp"
+                android:layout_height="150dp"
+                android:fontFamily="@font/octninekor2"
+                android:textSize="35dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="35dp"
+                android:paddingBottom="35dp" />
+    </GridLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_review"
+        android:background="@drawable/round_button_home_color1"
+        android:text="이전 테스트 결과보기"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textSize="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+        android:fontFamily="@font/octninekor2"/>
+
+</RelativeLayout>
