@@ -22,13 +22,13 @@ import java.util.concurrent.ExecutionException;
 
 public class SelfDiagnosisResultActivity extends AppCompatActivity {
 
-    String url = "http://3.35.65.128:8080/simponglee/";
+    String url = "http://192.168.56.1:8090/";
 
     private static final String TAG = "SelfDiagnosisResultActivity";
-    TextView scoreTv, levelTv, commentTv;
+    TextView scoreTv, levelTv, commentTv, userNameTv;
     Button finishBtn, redoBtn;
     int userid;
-
+    String userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +37,8 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
         scoreTv = (TextView)findViewById(R.id.depressionScoreTv);
         levelTv = (TextView)findViewById(R.id.depressionLevelTv);
         commentTv = (TextView)findViewById(R.id.depressionCheerText);
+        userNameTv = (TextView) findViewById(R.id.userName);
+
         finishBtn = (Button) findViewById(R.id.finishBtn);
         redoBtn = (Button) findViewById(R.id.redoBtn);
 
@@ -44,6 +46,10 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
         int categoryid = getIntent().getIntExtra("categoryid", 0);
         int rslt = getIntent().getIntExtra("selfDiagnosisScore", 0);
         String level = "";
+        userName = getNickname(userid).replaceAll("\"", "");
+
+        userNameTv.setText(userName);
+
 
         if(rslt >= 60) level = "심각";
         else if(rslt >= 30) level = "주의";
@@ -79,7 +85,23 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
             }
         });
     }
+    private String getNickname(int userid) {
+        ContentValues values = new ContentValues();
 
+        values.put("userid", userid);
+
+        NetworkTask getNickname = new NetworkTask(url+"getNickname", values);
+
+        try {
+            userName = getNickname.execute().get();
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return userName;
+    }
     private String getComment(int categoryid, String selfDiagnosisLevel) {
         ContentValues values = new ContentValues();
 

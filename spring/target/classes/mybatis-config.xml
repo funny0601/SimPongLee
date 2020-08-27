@@ -9,6 +9,7 @@
 			<typeAlias type="com.example.dto.SelfDiagnosisVO" alias="SelfDiagnosisVO"/>
 			<typeAlias type="com.example.dto.QuestionVO" alias="QuestionVO"/>
 			<typeAlias type="com.example.dto.CommentVO" alias="CommentVO"/>
+			<typeAlias type="com.example.dto.UserVO" alias="UserVO"/>
 		</typeAliases>
 
 	</configuration>

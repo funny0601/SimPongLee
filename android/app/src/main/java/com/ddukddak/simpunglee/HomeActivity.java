@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,12 +27,12 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class HomeActivity extends AppCompatActivity {
-    String url = "http://3.35.65.128:8080/simponglee/";
+    String url = "http://192.168.56.1:8090/";
 
     LinearLayout diagnosisButton, chatbotButton, calendarButton;
     TextView diagnosisLevelTv;
     String userLevel;
-    int userid = 1;
+    int userId;
     TextView home_nickname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +40,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 
-        // LoginActivity에서 userid를 받아와야해요
-        // 그 userid를 여기 userid 변수에 저장해주면 됩니다아
-
+        //LoginActivity에서 nickname가져와서 그걸로 다시 userid 검사함요
         String nickname = getIntent().getStringExtra("nickname");
         home_nickname = (TextView)findViewById(R.id.home_nickname);
         home_nickname.setText(nickname);
@@ -54,12 +53,16 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
+        userId = getUserId(nickname);
+
         calendarButton = (LinearLayout) findViewById(R.id.calendarButton);
         calendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, CalendarActivity.class);
                 // userid도 같이 캘린터 액티비티로 넘겨주세요!
+                intent.putExtra("userid", userId);
                 startActivity(intent);
             }
         });
@@ -69,12 +72,12 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, SelfDiagnosisQuestionActivity.class);
-                intent.putExtra("userid", userid);
+                intent.putExtra("userid", userId);
                 startActivity(intent);
             }
         });
 
-        userLevel = getUserLevel(userid);
+        userLevel = getUserLevel(userId);
         setLevelTextView(userLevel);
     }
 
@@ -82,7 +85,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        userLevel = getUserLevel(userid);
+        userLevel = getUserLevel(userId);
         setLevelTextView(userLevel);
     }
 
@@ -116,7 +119,21 @@ public class HomeActivity extends AppCompatActivity {
         intent.putExtras(bundle);
         startActivity(intent);
     }
+    private int getUserId(String home_nickname){
+        ContentValues values = new ContentValues();
 
+        values.put("nickname", home_nickname);
+
+        NetworkTask getId = new NetworkTask(url+"getId", values);
+        try {
+        userId = Integer.parseInt(getId.execute().get());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return userId;
+    }
     private String getUserLevel(int userid) {
         ContentValues values = new ContentValues();
 

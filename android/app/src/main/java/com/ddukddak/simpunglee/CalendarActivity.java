@@ -67,6 +67,7 @@ public class CalendarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calendar);
 
         // HomeActivity에서 userid를 받아와야 합니다아!
+        int userid = getIntent().getIntExtra("userid", 0);
 
 
         // 뒤로가기 버튼

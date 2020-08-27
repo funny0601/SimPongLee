@@ -42,4 +42,18 @@ public class UserDAOlmpl implements UserDAO{
         map.put("nickname", nickname);
         return sqlSession.selectOne(Namespace+".checkUser", map); //insert 할때는 string 값으로 결과 반환
     }
+    @Override
+    public Integer getId(String nickname) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("nickname", nickname);
+        return sqlSession.selectOne(Namespace+".getId", map); //insert 할때는 string 값으로 결과 반환
+    }
+
+    @Override
+    public String getNickname(int userid) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("userid", userid);
+        String result = sqlSession.selectOne(Namespace+".getNickname", map).toString();
+        return  result; //select 할때는 selectList로 List 값으로 반환
+    }
 }

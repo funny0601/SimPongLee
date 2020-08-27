@@ -31,6 +31,26 @@ public class UserController {
 
         return user;
     }
+    @RequestMapping(value = "/getNickname", method = {RequestMethod.POST,RequestMethod.GET})
+    public String getNickname(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
+
+        logger.info("getNickname");
+
+        int userid = Integer.parseInt(httpServletRequest.getParameter("userid"));
+        String nickname =userService.getNickname(userid);
+
+        return nickname;
+    }
+    @RequestMapping(value = "/getId", method = {RequestMethod.POST,RequestMethod.GET})
+    public int getId(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
+
+        logger.info("getId");
+        String nickname = httpServletRequest.getParameter("nickname");
+
+        int userId = userService.getId(nickname);
+
+        return userId;
+    }
 
     @RequestMapping(value = "/insertUser", method = {RequestMethod.POST,RequestMethod.GET})
     public String insertUser(Locale locale, HttpServletRequest httpServletRequest) throws Exception{

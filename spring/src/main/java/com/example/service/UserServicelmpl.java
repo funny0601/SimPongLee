@@ -27,4 +27,14 @@ public class UserServicelmpl implements UserService{
     public Integer checkUser(String nickname) throws Exception {
         return dao.checkUser(nickname);
     }
+
+    @Override
+    public int getId(String nickname) throws Exception {
+        return dao.getId(nickname);
+    }
+
+    @Override
+    public String getNickname(int userid) throws Exception {
+        return dao.getNickname(userid);
+    }
 }

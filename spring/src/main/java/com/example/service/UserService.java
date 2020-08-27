@@ -10,4 +10,8 @@ public interface UserService {
 
     public Integer checkUser(String nickname) throws Exception;
 
+    public int getId(String nickname) throws Exception;
+
+    public String getNickname(int userid) throws Exception;
+
 }

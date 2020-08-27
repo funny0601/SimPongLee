@@ -31,4 +31,13 @@
 		WHERE nickname = #{nickname}
 	</select>
 
+	<select id="getId" parameterType="hashmap" resultType="Integer" >
+			SELECT userid FROM user
+			WHERE nickname = #{nickname}
+	</select>
+
+	<select id="getNickname" parameterType="hashmap" resultType="String" >
+			SELECT nickname FROM user
+			WHERE userid = #{userid}
+	</select>
 </mapper>
