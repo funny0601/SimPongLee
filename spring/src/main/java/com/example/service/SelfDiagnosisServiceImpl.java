@@ -13,8 +13,13 @@ public class SelfDiagnosisServiceImpl implements SelfDiagnosisService {
 	private SelfDiagnosisDAO dao;
 
 	@Override
-	public List selectLevel(int userid, int categoryid) throws Exception {
-		return dao.selectLevel(userid, categoryid);
+	public List selectLevel(int userid) throws Exception {
+		return dao.selectLevel(userid);
+	}
+
+	@Override
+	public List selectStartLevel(int userid, int categoryid) throws Exception {
+		return dao.selectStartLevel(userid, categoryid);
 	}
 
 	@Override

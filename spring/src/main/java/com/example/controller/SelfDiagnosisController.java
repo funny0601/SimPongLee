@@ -27,9 +27,21 @@ public class SelfDiagnosisController {
         logger.info("selectLevel");
 
         int userid = Integer.parseInt(httpServletRequest.getParameter("userid"));
+
+        List levelList = selfDiagnosisService.selectLevel(userid);
+
+        return levelList;
+    }
+
+    @RequestMapping(value = "/selectStartLevel", method = {RequestMethod.POST,RequestMethod.GET})
+    public List<SelfDiagnosisVO> selectStartLevel(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
+
+        logger.info("selectStartLevel");
+
+        int userid = Integer.parseInt(httpServletRequest.getParameter("userid"));
         int categoryid = Integer.parseInt(httpServletRequest.getParameter("categoryid"));
 
-        List levelList = selfDiagnosisService.selectLevel(userid, categoryid);
+        List levelList = selfDiagnosisService.selectStartLevel(userid, categoryid);
 
         return levelList;
     }
@@ -42,9 +54,9 @@ public class SelfDiagnosisController {
         int userid = Integer.parseInt(httpServletRequest.getParameter("userid"));
         int categoryid = Integer.parseInt(httpServletRequest.getParameter("categoryid"));
 
-        List levelList = selfDiagnosisService.selectResult(userid, categoryid);
+        List resultList = selfDiagnosisService.selectResult(userid, categoryid);
 
-        return levelList;
+        return resultList;
     }
 
     @RequestMapping(value = "/putResult", method = {RequestMethod.POST,RequestMethod.GET})
