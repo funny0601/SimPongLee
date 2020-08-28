@@ -15,7 +15,7 @@ package com.ddukddak.simpunglee;
 
 public class LoginActivity extends AppCompatActivity {
 
-    String url = "http://192.168.56.1:8090/";
+    String url = "http://3.35.65.128:8080/simpunglee/";
 
     EditText login_email;
     EditText login_password;
@@ -81,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                 intent.putExtra("nickname", check.toString());
                 System.out.println("nickname"+check);
                 startActivity(intent);
+                finish();
             }
         } catch (ExecutionException e) {
             e.printStackTrace();

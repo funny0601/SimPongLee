@@ -27,7 +27,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class HomeActivity extends AppCompatActivity {
-    String url = "http://192.168.56.1:8090/";
+    String url = "http://3.35.65.128:8080/simpunglee/";
 
     LinearLayout diagnosisButton, chatbotButton, calendarButton;
     TextView diagnosisLevelTv;
@@ -71,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
         diagnosisButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, SelfDiagnosisQuestionActivity.class);
+                Intent intent = new Intent(HomeActivity.this, SelfDiagnosisCategoryActivity.class);
                 intent.putExtra("userid", userId);
                 startActivity(intent);
             }
@@ -101,7 +101,6 @@ public class HomeActivity extends AppCompatActivity {
         // provide your Dialogflow's Google Credential JSON saved under RAW folder in resources
         DialogflowCredentials.getInstance().setInputStream(getResources().openRawResource(R.raw.credential_file));
 
-
         ChatbotSettings.getInstance().setChatbot( new Chatbot.ChatbotBuilder()
                 .setDoAutoWelcome(false) // True by Default, False if you do not want the Bot to greet the user Automatically. Dialogflow agent must have a welcome intent to handle this
                 //.setChatBotAvatar(getDrawable(R.drawable.chatbot_icon))
@@ -113,34 +112,35 @@ public class HomeActivity extends AppCompatActivity {
         // ChatbotActivity는 코드 수정이 불가능해서 xml 변경도 색 변경이 할 수 있는 최대임!!
         Bundle bundle = new Bundle();
 
-        // provide a UUID for your session with the Dialogflow agent
-        bundle.putString(ChatbotActivity.SESSION_ID, UUID.randomUUID().toString());
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-    private int getUserId(String home_nickname){
-        ContentValues values = new ContentValues();
-
-        values.put("nickname", home_nickname);
-
-        NetworkTask getId = new NetworkTask(url+"getId", values);
-        try {
-        userId = Integer.parseInt(getId.execute().get());
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            // provide a UUID for your session with the Dialogflow agent
+            bundle.putString(ChatbotActivity.SESSION_ID, UUID.randomUUID().toString());
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
-        return userId;
-    }
-    private String getUserLevel(int userid) {
+        private int getUserId(String home_nickname){
+            ContentValues values = new ContentValues();
+
+            values.put("nickname", home_nickname);
+
+            NetworkTask getId = new NetworkTask(url+"getId", values);
+            try {
+                userId = Integer.parseInt(getId.execute().get());
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return userId;
+        }
+
+        private String getUserLevel(int userid) {
         ContentValues values = new ContentValues();
 
         values.put("userid", userid);
         values.put("categoryid", 1);
 
-        NetworkTask getLevelTask = new NetworkTask(url + "selectLevel", values);
+        NetworkTask getLevelTask = new NetworkTask(url + "selectStartLevel", values);
 
         String receivedData;
         String returnData = "";
@@ -152,22 +152,22 @@ public class HomeActivity extends AppCompatActivity {
             } else{
                 returnData = parseJson(receivedData);
             }
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return returnData;
         }
 
-        return returnData;
-    }
+        private String parseJson(String context){
+            JsonParser jsonParser = new JsonParser();
+            JsonArray jsonArray = (JsonArray) jsonParser.parse(context);
+            JsonObject object = (JsonObject) jsonArray.get(0);
 
-    private String parseJson(String context){
-        JsonParser jsonParser = new JsonParser();
-        JsonArray jsonArray = (JsonArray) jsonParser.parse(context);
-        JsonObject object = (JsonObject) jsonArray.get(0);
+            String level = object.get("selfDiagnosisLevel").getAsString();
 
-        String level = object.get("selfDiagnosisLevel").getAsString();
-
-        return level;
-    }
+            return level;
+        }
 }

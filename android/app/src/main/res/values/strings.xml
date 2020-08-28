@@ -3,7 +3,7 @@
     <string name="ip_sy_desktop">http://192.168.55.93:8080/</string>
     <string name="ip_sy_laptop">http://192.168.35.93:8080/</string>
     <string name="ip_ia_laptop">http://192.168.123.162:8080/</string>
-    <string name="ubuntu_remote_server">http://3.35.65.128:8080/simponglee/</string>
+    <string name="ubuntu_remote_server">http://3.35.65.128:8080/simpunglee/</string>
     <string name="ip_yn_laptop">http:///192.168.56.1:8080/</string>
 
 </resources>

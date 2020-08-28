@@ -25,11 +25,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements QuestionRecyclerAdapter.ListItemClickListener {
 
-    String url = "http://192.168.56.1:8090/";
+    String url = "http://3.35.65.128:8080/simpunglee/";
 
     private static final String TAG = "SelfDiagnosisActivity";
 
+    final private static int RESULT_REQUEST_CODE = 102;
+
     private int userid;
+    private int categoryid;
+
     int problemCount = 0;
 
     private Button submitBtn;
@@ -50,6 +54,7 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
         setContentView(R.layout.activity_self_diagnosis_question);
 
         userid = getIntent().getIntExtra("userid", 0);
+        categoryid = getIntent().getIntExtra("categoryid", 0);
 
         submitBtn = findViewById(R.id.submitBtn);
         quitBtn = findViewById(R.id.quiBtn);
@@ -58,7 +63,6 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mLinearLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
 
         QuestionRecyclerAdapter.ListItemClickListener myListener = new QuestionRecyclerAdapter.ListItemClickListener() {
             @Override
@@ -103,10 +107,9 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
                     Intent in = new Intent(getApplicationContext(), SelfDiagnosisResultActivity.class);
                     System.out.println("최종점수"+rslt);
                     in.putExtra("userid", userid);
-                    in.putExtra("categoryid", 1);
+                    in.putExtra("categoryid", categoryid);
                     in.putExtra("selfDiagnosisScore", rslt);
-                    startActivity(in);
-                    finish();
+                    startActivityForResult(in, RESULT_REQUEST_CODE);
                 }
             }
         }
@@ -116,16 +119,36 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
         quitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent returnIntent = new Intent();
+                setResult(RESULT_OK, returnIntent);
                 finish();
             }
         });
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == RESULT_REQUEST_CODE) {
+            if(resultCode == RESULT_CANCELED) {
+                Intent returnIntent = new Intent();
+                setResult(RESULT_CANCELED, returnIntent);
+                finish();
+            }
+            if(resultCode == RESULT_OK) {
+                Intent returnIntent = new Intent();
+                setResult(RESULT_OK, returnIntent);
+                finish();
+            }
+        }
+    }
+
     private List<SelfDiagnosisQuestionVO> getQuestion() {
         ContentValues values = new ContentValues();
 
-        values.put("categoryid", 1);
+        values.put("categoryid", categoryid);
+        System.out.println("categoryid : " + categoryid);
 
         NetworkTask getQuestionTask = new NetworkTask(url + "selectQuestion", values);
 

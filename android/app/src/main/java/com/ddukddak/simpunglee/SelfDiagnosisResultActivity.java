@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutionException;
 
 public class SelfDiagnosisResultActivity extends AppCompatActivity {
 
-    String url = "http://192.168.56.1:8090/";
+    String url = "http://3.35.65.128:8080/simpunglee/";
 
     private static final String TAG = "SelfDiagnosisResultActivity";
     TextView scoreTv, levelTv, commentTv, userNameTv;
@@ -50,7 +50,6 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
 
         userNameTv.setText(userName);
 
-
         if(rslt >= 60) level = "심각";
         else if(rslt >= 30) level = "주의";
         else level = "관심";
@@ -58,6 +57,8 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
         StringBuffer scoreSb = new StringBuffer();
         scoreSb.append("우울증 점수 : " + rslt);
 
+        Intent returnIntent = new Intent();
+        setResult(RESULT_CANCELED, returnIntent);
         scoreTv.setText(scoreSb);
         levelTv.setText(level);
 
@@ -72,15 +73,19 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("onFinishBtn");
+                Intent returnIntent = new Intent();
+                setResult(RESULT_CANCELED, returnIntent);
                 finish();
             }
         });
+
         redoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in  = new Intent(getApplicationContext(), SelfDiagnosisCategoryActivity.class);
-                in.putExtra("userid", userid);
-                startActivity(in);
+                System.out.println("onRedoBtn");
+                Intent returnIntent = new Intent();
+                setResult(RESULT_OK, returnIntent);
                 finish();
             }
         });

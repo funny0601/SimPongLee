@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutionException;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    String url = "http://192.168.56.1:8090/";
+    String url = "http://3.35.65.128:8080/simpunglee/";
 
     EditText name;
     EditText nickname;

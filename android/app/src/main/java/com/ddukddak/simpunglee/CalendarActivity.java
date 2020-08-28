@@ -37,7 +37,7 @@ import java.util.concurrent.ExecutionException;
 
 public class CalendarActivity extends AppCompatActivity {
 
-    String url = "http://192.168.123.162:8090/";
+    String url = "http://3.35.65.128:8080/simpunglee/";
 
     private static final String TAG_TEXT = "text";
     private static final String TAG_IMAGE = "image";
