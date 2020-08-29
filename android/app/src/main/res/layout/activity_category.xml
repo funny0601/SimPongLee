@@ -123,6 +123,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn_review"
+        android:onClick="clickHere"
         android:background="@drawable/round_button_home_color1"
         android:text="이전 테스트 결과보기"
         android:layout_marginLeft="50dp"

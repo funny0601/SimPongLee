@@ -1,48 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:gravity="center"
-    android:layout_width="wrap_content"
+    android:id="@+id/headerRelativeLayout"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp">
 
-
     <TextView
         android:id="@+id/categoryName"
+        android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
-        android:text="HAPPY"
+        android:text="공황장애"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_marginTop="10dp"
         android:textAlignment="center"
-        android:fontFamily="@font/oratorstdmedium"
+        android:fontFamily="@font/octninekor2"
         android:textSize="20dp"
         android:layout_height="wrap_content" />
 
+    <LinearLayout
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content">
     <TextView
         android:id="@+id/categoryScore"
         android:layout_width="wrap_content"
-        android:text="HAPPY"
+        android:text="점수:  오만점"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:layout_marginTop="10dp"
         android:textAlignment="center"
-        android:fontFamily="@font/oratorstdmedium"
-        android:textSize="20dp"
+        android:fontFamily="@font/handotum"
+        android:textSize="18dp"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/categoryGrade"
-        android:layout_width="wrap_content"
-        android:text="HAPPY"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_marginTop="10dp"
-        android:textAlignment="center"
-        android:fontFamily="@font/oratorstdmedium"
-        android:textSize="20dp"
-        android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="등급:  "
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="5dp"
+                android:textAlignment="center"
+                android:fontFamily="@font/handotum"
+                android:textSize="18dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/categoryGrade"
+                android:layout_width="wrap_content"
+                android:text="망함"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="5dp"
+                android:textAlignment="center"
+                android:fontFamily="@font/handotum"
+                android:textSize="18dp"
+                android:layout_height="wrap_content" />
 
-</LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

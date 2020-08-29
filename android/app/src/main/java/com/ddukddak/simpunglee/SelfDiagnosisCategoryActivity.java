@@ -2,10 +2,13 @@ package com.ddukddak.simpunglee;
 
 import android.content.ContentValues;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -35,12 +38,9 @@ public class SelfDiagnosisCategoryActivity extends AppCompatActivity {
     int userid;
     List<SelfDiagnosisCategoryVO> categoryVOList;
 
-    private RecyclerView mRecyclerView;
-    LinearLayoutManager mLinearLayoutManager;
-    private CategoryRecyclerAdapter mAdapter;
-
     private Button btn_review;
-    private ImageButton closeBtn;
+    CategoryDialog categoryDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,51 +50,31 @@ public class SelfDiagnosisCategoryActivity extends AppCompatActivity {
         GridLayout gridLayout = (GridLayout)findViewById(R.id.category_list);
 
         btn_review = (Button)findViewById(R.id.btn_review);
-        btn_review.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCategoryDialogbox();
-            }
-        });
     }
 
-    private void showCategoryDialogbox() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(SelfDiagnosisCategoryActivity.this);
-        LayoutInflater inflater = LayoutInflater.from(SelfDiagnosisCategoryActivity.this);
-        View view = inflater.inflate(R.layout.dialog_category, null);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewCategory);
-        builder.setView(view);
-
-        final AlertDialog dialog = builder.create();
-        DividerItemDecoration dividerItemDecoration =
-                new DividerItemDecoration(getApplicationContext(),
-                        new LinearLayoutManager(getApplicationContext()).getOrientation());
-        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recyclerview_divider));
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
-        // 서버에서 카테고리 점수, 등급, 이름 목록 받아서 저장해서 어댑터로 넘기기
-        //categoryList = getCategory();
-
+    public void clickHere(View view) {
         categoryVOList = new ArrayList<>();
+        // 임의 데이터 쳐넣기
         categoryVOList.add(new SelfDiagnosisCategoryVO("우울증", 100, "심각"));
         categoryVOList.add(new SelfDiagnosisCategoryVO("우울증", 100, "심각"));
         categoryVOList.add(new SelfDiagnosisCategoryVO("우울증", 100, "심각"));
         categoryVOList.add(new SelfDiagnosisCategoryVO("우울증", 100, "심각"));
 
+        CategoryRecyclerAdapter dataAdapter = new CategoryRecyclerAdapter(SelfDiagnosisCategoryActivity.this, categoryVOList);
+        categoryDialog = new CategoryDialog(SelfDiagnosisCategoryActivity.this, dataAdapter);
+        // 카테고리 화면 width, height 조정
+        categoryDialog.show();
 
-        mAdapter = new CategoryRecyclerAdapter(SelfDiagnosisCategoryActivity.this, categoryVOList);
-        mRecyclerView.setAdapter(mAdapter);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
 
-        closeBtn = (ImageButton) view.findViewById(R.id.closeBtn);
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        Window window = categoryDialog.getWindow();
 
-        dialog.setCancelable(false);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
+        int x = (int)(size.x*0.85f);
+        int y= (int)(size.y*0.7f);
+
+        window.setLayout(x,y);
     }
 
     private List<SelfDiagnosisCategoryVO> getCategory() {
