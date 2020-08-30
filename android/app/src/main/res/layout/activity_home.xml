@@ -8,17 +8,12 @@
     android:background="@drawable/home_background">
 
 
-    <TextView
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="홈"
-        android:fontFamily="@font/octninekor1"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:padding="10dp"
-        android:textSize="28dp"/>
-
+        android:layout_height="60dp"
+        android:paddingTop="10dp"
+        android:src="@drawable/logo_white"
+        android:layout_centerInParent="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,14 +30,14 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/round_button_square_color1"
+            android:background="@drawable/round_button_square_color2"
             android:layout_weight="2"
             android:weightSum="7">
 
             <ImageButton
                 android:background="@android:color/transparent"
                 android:layout_width="0dp"
-                android:padding="20dp"
+                android:padding="10dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:scaleType="centerInside"
@@ -101,7 +96,8 @@
                         android:layout_height="match_parent"
                         android:fontFamily="@font/handotum"
                         android:text="위험"
-                        android:textColor="#C00A32"
+                        android:background="@color/white"
+                        android:textColor="#FFC107"
                         android:textSize="15dp"
                         android:textStyle="bold" />
 
@@ -115,7 +111,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/round_button_square_color2"
+            android:background="@drawable/round_button_square_color1"
             android:layout_weight="2"
             android:weightSum="4"
             android:id="@+id/chatbotButton">
@@ -148,7 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/round_button_square_color2"
+            android:background="@drawable/round_button_square_color1"
             android:layout_weight="2"
             android:clickable="true"
             android:id="@+id/diagnosisButton"
@@ -182,7 +178,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/round_button_square_color2"
+            android:background="@drawable/round_button_square_color1"
             android:layout_weight="2"
             android:id="@+id/calendarButton"
             android:weightSum="4">

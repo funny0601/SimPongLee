@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
 
         android:id="@+id/diagnosisStartBtn"
-        android:background="@drawable/round_button_home_color1"
+        android:background="@drawable/round_button_home_color2"
         android:text="시작하기"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"

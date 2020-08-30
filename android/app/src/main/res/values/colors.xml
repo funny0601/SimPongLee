@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#E9E0BE</color>
-    <color name="colorPrimaryDark">#476C89</color>
-    <color name="colorAccent">#E9C18D</color>
-
+    <color name="colorPrimary">#D0E9EE</color>
+    <color name="colorPrimaryDark">#CC7271</color>
+    <color name="colorAccent">#F6E6CD</color>
+    <color name="colorDim">#FCF5EE</color>
     <!--chatbot-->
     <color name="userAvatarBG">#3A8ABC</color>
     <color name="chatPrimary">@color/colorAccent</color>
