@@ -1,6 +1,7 @@
 package com.ddukddak.simpunglee;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
@@ -33,13 +34,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SelfDiagnosisCategoryActivity extends AppCompatActivity {
 
-    String url = "http://3.35.65.128:8080/simponglee/";
-    GridLayout gridLayout;
-    int userid;
+    String url = "http://3.35.65.128:8080/simpunglee/";
+    final public static int REQUEST_CODE = 101;
+    private int userid;
     List<SelfDiagnosisCategoryVO> categoryVOList;
 
     private Button btn_review;
     CategoryDialog categoryDialog;
+
+    private Button selfDiagnosisDepressedBtn;
+    private Button selfDiagnosisADHDBtn;
+    private Button selfDiagnosisStressBtn;
+    private Button selfDiagnosisPanicBtn;
+
+    ImageButton quitBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,16 +57,57 @@ public class SelfDiagnosisCategoryActivity extends AppCompatActivity {
         //userid = getIntent().getIntExtra("userid", 0);
         GridLayout gridLayout = (GridLayout)findViewById(R.id.category_list);
 
+        userid = getIntent().getIntExtra("userid", 0);
+
         btn_review = (Button)findViewById(R.id.btn_review);
+
+        final Intent intent = new Intent(SelfDiagnosisCategoryActivity.this, SelfDiagnosisQuestionActivity.class);
+        intent.putExtra("userid", userid);
+
+        selfDiagnosisDepressedBtn = (Button)findViewById(R.id.selfDiagnosisDepressedBtn);
+        selfDiagnosisDepressedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent.putExtra("categoryid", 1);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+        selfDiagnosisADHDBtn = (Button)findViewById(R.id.selfDiagnosisADHDBtn);
+        selfDiagnosisADHDBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent.putExtra("categoryid", 2);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+
+        selfDiagnosisStressBtn = (Button)findViewById(R.id.selfDiagnosisStressBtn);
+        selfDiagnosisStressBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent.putExtra("categoryid", 3);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+        selfDiagnosisPanicBtn = (Button)findViewById(R.id.selfDiagnosisPanicBtn);
+        selfDiagnosisPanicBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent.putExtra("categoryid", 4);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+        quitBtn = findViewById(R.id.quiBtn);
+        quitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void clickHere(View view) {
-        categoryVOList = new ArrayList<>();
-        // 임의 데이터 쳐넣기
-        categoryVOList.add(new SelfDiagnosisCategoryVO("우울증", 100, "심각"));
-        categoryVOList.add(new SelfDiagnosisCategoryVO("우울증", 100, "심각"));
-        categoryVOList.add(new SelfDiagnosisCategoryVO("우울증", 100, "심각"));
-        categoryVOList.add(new SelfDiagnosisCategoryVO("우울증", 100, "심각"));
+        categoryVOList = getCategory();
 
         CategoryRecyclerAdapter dataAdapter = new CategoryRecyclerAdapter(SelfDiagnosisCategoryActivity.this, categoryVOList);
         categoryDialog = new CategoryDialog(SelfDiagnosisCategoryActivity.this, dataAdapter);
@@ -77,13 +126,21 @@ public class SelfDiagnosisCategoryActivity extends AppCompatActivity {
         window.setLayout(x,y);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE) {
+            if(resultCode == -2) {
+                finish();
+            }
+        }
+    }
+
     private List<SelfDiagnosisCategoryVO> getCategory() {
         ContentValues values = new ContentValues();
-        // 여기 카테고리 이름, 점수 등급 받아오는 코드 수정해서 작성해주세요
-        // 기존 코드 그대로 갖고온거에요!!
-        values.put("categoryid", 1);
+        values.put("userid", userid);
 
-        NetworkTask getQuestionTask = new NetworkTask(url + "selectQuestion", values);
+        NetworkTask getQuestionTask = new NetworkTask(url + "selectLevel", values);
 
         String receivedData;
         List<SelfDiagnosisCategoryVO> returnData = new ArrayList<>();
@@ -106,22 +163,20 @@ public class SelfDiagnosisCategoryActivity extends AppCompatActivity {
 
     private List<SelfDiagnosisCategoryVO> parseJson(String context){
 
-        // String ArrayList에서 selfDiagnosisQuestionVO 타입의 List로 바꿨어요
-        // RecyclerView에서 보여주기에는 이게 쬐에끔더 편한거 같더라구여..!?
-
         JsonParser jsonParser = new JsonParser();
         JsonArray jsonArray = (JsonArray) jsonParser.parse(context);
 
         List<SelfDiagnosisCategoryVO> categoryVOList = new ArrayList<>();
 
         JsonObject q;
+        SelfDiagnosisCategoryVO categoryVO;
         for(int i = 0; i < jsonArray.size(); i++) {
             q = (JsonObject)jsonArray.get(i);
-            // SelfDiagnosisQuestionVO 보시고 getCategoryName, getGrade웅앵 함수들 보시고
-            // 필요한거에 맞춰서 넣으시면 돼요!!
-            // 모르면 자유이용권을 써주세여~!
-
-            //categoryVOList.add(new SelfDiagnosisCategoryVO(q.get("question").getAsString()));
+            categoryVO = new SelfDiagnosisCategoryVO(
+                    q.get("categoryName").getAsString(),
+                    q.get("selfDiagnosisScore").getAsInt(),
+                    q.get("selfDiagnosisLevel").getAsString());
+            categoryVOList.add(categoryVO);
         }
         return categoryVOList;
     }

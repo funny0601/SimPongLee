@@ -1,5 +1,5 @@
 package com.ddukddak.simpunglee;
-public class SelfDiagnosisQuestionVO {
+class SelfDiagnosisQuestionVO {
     private String question;
     private int selectPoint;
     public SelfDiagnosisQuestionVO(String question){
