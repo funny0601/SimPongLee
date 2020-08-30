@@ -1,6 +1,7 @@
 package com.ddukddak.simpunglee;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -61,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
         register.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int new_user_id=-99;
                 et_name= name.getText().toString();
                 et_nickname= nickname.getText().toString();
                 et_email= email.getText().toString();
@@ -76,10 +78,19 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 // 비밀번호 제대로 입력했을 경우에 서버에 저장하고
-                saveUser(et_name, et_nickname, et_email, et_password,et_phonenumber);
+                try {
+                    new_user_id =saveUser(et_name, et_nickname, et_email, et_password,et_phonenumber);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.putExtra("new_user_id", new_user_id+"");
+                setResult(RESULT_OK, intent);
                 // 다시 로그인 액티비티로 넘어가게 하기
-                // 다시 로그인해야되니까 따로 넘길 값은 없음!
+                // 신규 가입자의 경우, 신규 가입자 유저 아이디를 반환
                 finish();
             }
         });
@@ -110,8 +121,9 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-    private void saveUser(String name, String nickname, String email, String password, String phonenumber) {
+    private int saveUser(String name, String nickname, String email, String password, String phonenumber) throws ExecutionException, InterruptedException {
 
+        int new_user=-99;
         ContentValues values = new ContentValues();
 
         values.put("name", name);
@@ -122,9 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         NetworkTask insertUser = new NetworkTask(url+"insertUser", values);
 
-        insertUser.execute();
-
-
+        new_user= Integer.parseInt(insertUser.execute().get());
+        return new_user;
     }
-
 }

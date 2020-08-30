@@ -16,11 +16,12 @@ package com.ddukddak.simpunglee;
 public class LoginActivity extends AppCompatActivity {
 
     String url = "http://3.35.65.128:8080/simpunglee/";
-
+    final private static int RESULT_REQUEST_CODE = 102;
     EditText login_email;
     EditText login_password;
     Button login;
     Button login_register;
+    int new_user_id=-999;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 그냥 회원가입 화면으로 넘어감
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, RESULT_REQUEST_CODE);
             }
         });
 
@@ -77,11 +78,28 @@ public class LoginActivity extends AppCompatActivity {
             if(!check.equals("")){
                 check = check.replaceAll("\"", "");
 
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                intent.putExtra("nickname", check.toString());
-                System.out.println("nickname"+check);
-                startActivity(intent);
-                finish();
+                // 방금 회원가입한 회원인지 비교
+                if(new_user_id!=-999){
+                    ContentValues loginValues = new ContentValues();
+                    loginValues.put("nickname", check);
+                    NetworkTask getUserID = new NetworkTask(url+"getId",loginValues);
+                    int user_id_loggined = Integer.parseInt(getUserID.execute().get());
+                    if (new_user_id==user_id_loggined){
+                        Intent intent = new Intent(getApplicationContext(), SelfDiagnosisQuestionActivity.class);
+                        intent.putExtra("userid", user_id_loggined);
+                        intent.putExtra("categoryid", 1);
+                        System.out.println("categoryid"+check);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+                else{
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    intent.putExtra("nickname", check.toString());
+                    System.out.println("nickname"+check);
+                    startActivity(intent);
+                    finish();
+                }
             }
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -90,5 +108,21 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return et_login_email;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == RESULT_REQUEST_CODE) {
+            if(resultCode == RESULT_CANCELED) {
+                Toast.makeText(LoginActivity.this, "결과가 성공이 아님.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if(resultCode == RESULT_OK) {
+                new_user_id = Integer.parseInt(data.getStringExtra("new_user_id"));
+                Toast.makeText(LoginActivity.this, "새로 가입된 유저 아이디 받아옴", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
     }
 }
