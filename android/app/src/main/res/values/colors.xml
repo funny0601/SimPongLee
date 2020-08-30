@@ -5,20 +5,21 @@
     <color name="colorAccent">#F6E6CD</color>
     <color name="colorDim">#FCF5EE</color>
     <!--chatbot-->
-    <color name="userAvatarBG">#3A8ABC</color>
-    <color name="chatPrimary">@color/colorAccent</color>
-    <color name="chatPrimaryFocus">@color/chatPrimary</color>
+    <color name="userAvatarBG">#CC7271</color> <!-- userIconBackground -->
+    <color name="chatPrimary">@color/colorAccent</color> <!-- 두번째 하단바랑 botBG 같이 바뀜-->
+    <color name="chatPrimaryFocus">@color/colorAccent</color>
     <color name="chatPrimaryPressed">#EBD594</color>
     <color name="chatPrimaryDisabled">#EBC65C</color>
-    <color name="chatBGnText">#FFFFFF</color>
-    <color name="chatSecondary">#FFFFFF</color>
+    <color name="chatBGnText">#8E8F93</color> <!--입력창 배경색-->
+    <color name="chatSecondary">#ffffff</color>
     <color name="chatSecondaryFocus">#F1F1F1</color>
     <color name="chatSecondaryPressed">#E9E9E9</color>
     <color name="chatSecondaryDisabled">#66FFFFFF</color>
-    <color name="botBGBubbleStroke">@color/colorPrimary</color>
-    <color name="botBGBubble">@color/colorPrimary</color>
-    <color name="userBGBubbleStroke">#CAE4F5</color>
-    <color name="userBGBubble">#CAE4F5</color>
-    <color name="checkbox">#8E8F93</color> <!--입력창-->
+    <color name="botBGBubbleStroke">@color/colorAccent</color> <!-- botIcon -->
+    <color name="botBGBubble">@color/colorAccent</color>  <!-- botIcon -->
+    <color name="userBGBubbleStroke">#CC7271</color>  <!-- userIcon -->
+    <color name="userBGBubble">#CC7271</color> <!-- userIcon -->
+    <color name="botAvatarBG">@color/colorAccent</color> <!-- botIconBG -->
+    <color name="checkbox">#000000</color> <!--입력창 텍스트-->
     <color name="statusBarColor">@color/colorPrimaryDark</color> <!--상단 컬러-->
 </resources>

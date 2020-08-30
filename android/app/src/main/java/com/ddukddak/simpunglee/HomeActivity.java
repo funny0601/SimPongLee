@@ -2,6 +2,7 @@ package com.ddukddak.simpunglee;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Color;
@@ -97,6 +98,7 @@ public class HomeActivity extends AppCompatActivity {
         else diagnosisLevelTv.setTextColor(Color.parseColor("#009933"));
     }
     // 챗봇 뷰 새로 열기
+    @SuppressLint("ResourceAsColor")
     public void openChatbot(View view) {
         // provide your Dialogflow's Google Credential JSON saved under RAW folder in resources
         DialogflowCredentials.getInstance().setInputStream(getResources().openRawResource(R.raw.credential_file));
@@ -107,6 +109,7 @@ public class HomeActivity extends AppCompatActivity {
                 //.setChatUserAvatar(getDrawable(R.drawable.user_icon)) // 라이브러리 주인이 함수를 잘못 짜서 이거 해도 적용 안됨
                 .setShowMic(false) // False by Default, True if you want to use Voice input from the user to chat
                 .build());
+
 
         Intent intent = new Intent(HomeActivity.this, ChatbotActivity.class); // 라이브러리 코드 내 ChatbotActivity로 넘어감
         // ChatbotActivity는 코드 수정이 불가능해서 xml 변경도 색 변경이 할 수 있는 최대임!!
