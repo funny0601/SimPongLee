@@ -6,7 +6,9 @@
 <mapper namespace="com.example.mapper.selfDiagnosisMapper">
 
 	<select id="selectLevel" parameterType="hashmap" resultType="hashmap">
-		SELECT categoryid, selfDiagnosisScore, selfDiagnosisLevel FROM selfDiagnosisResult
+		SELECT categoryName, selfDiagnosisScore, selfDiagnosisLevel
+		FROM selfDiagnosisResult AS sdr
+    		INNER JOIN selfDiagnosisCategory sdc ON sdr.categoryid = sdc.categoryid
 		WHERE userid = #{userid}
 	</select>
 
