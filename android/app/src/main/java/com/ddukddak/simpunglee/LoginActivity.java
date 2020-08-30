@@ -1,6 +1,6 @@
 package com.ddukddak.simpunglee;
 
-        import android.content.ContentValues;
+import android.content.ContentValues;
         import android.content.Intent;
         import android.os.Bundle;
         import android.util.Log;
@@ -66,18 +66,18 @@ public class LoginActivity extends AppCompatActivity {
         NetworkTask loginUser = new NetworkTask(url+"selectUser", values);
 
         try {
+
             String check = loginUser.execute().get();
 
-            if(check.equals("")) {
+            if(check.equals("no")) {
                 Toast.makeText(getApplicationContext(),  "이메일과 비밀번호를 확인해주세요.", Toast.LENGTH_LONG).show();
                 Log.d("tag", check);
                 login_email.setText(null);
                 login_password.setText(null);
                 return  "";
             }
-            if(!check.equals("")){
+            if(!check.equals("no")){
                 check = check.replaceAll("\"", "");
-
                 // 방금 회원가입한 회원인지 비교
                 if(new_user_id!=-999){
                     ContentValues loginValues = new ContentValues();
@@ -105,8 +105,12 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch(NullPointerException e) {
+            Toast.makeText(getApplicationContext(),  "이메일과 비밀번호를 확인해주세요.", Toast.LENGTH_LONG).show();
+            login_email.setText(null);
+            login_password.setText(null);
+            return  "";
         }
-
         return et_login_email;
     }
 
