@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                     NetworkTask getUserID = new NetworkTask(url+"getId",loginValues);
                     int user_id_loggined = Integer.parseInt(getUserID.execute().get());
                     if (new_user_id==user_id_loggined){
-                        Intent intent = new Intent(getApplicationContext(), SelfDiagnosisQuestionActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), SelfDiagnosisInitialStartActivity.class);
                         intent.putExtra("userid", user_id_loggined);
                         intent.putExtra("categoryid", 1);
                         System.out.println("categoryid"+check);
