@@ -68,56 +68,60 @@
         android:columnCount="2"
         android:rowCount="2">
 
-            <Button
-                android:background="@drawable/round_button_square_color1"
-                android:text="우울증"
-                android:layout_width="170dp"
-                android:layout_height="150dp"
-                android:fontFamily="@font/octninekor2"
-                android:textSize="35dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="35dp"
-                android:paddingBottom="35dp"
-                android:layout_marginEnd="30dp"/>
+        <Button
+            android:id="@+id/selfDiagnosisDepressedBtn"
+            android:layout_width="170dp"
+            android:layout_height="150dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/round_button_square_color1"
+            android:fontFamily="@font/octninekor2"
+            android:paddingLeft="10dp"
+            android:paddingTop="35dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="35dp"
+            android:text="우울증"
+            android:textSize="35dp" />
 
-            <Button
-                android:background="@drawable/round_button_square_color2"
-                android:text="ADHD"
-                android:layout_width="170dp"
-                android:layout_height="150dp"
-                android:fontFamily="@font/octninekor2"
-                android:textSize="35dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="35dp"
-                android:paddingBottom="35dp"
-                android:layout_marginBottom="60dp"/>
+        <Button
+            android:id="@+id/selfDiagnosisADHDBtn"
+            android:layout_width="170dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="60dp"
+            android:background="@drawable/round_button_square_color2"
+            android:fontFamily="@font/octninekor2"
+            android:paddingLeft="10dp"
+            android:paddingTop="35dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="35dp"
+            android:text="ADHD"
+            android:textSize="35dp" />
 
-            <Button
-                android:background="@drawable/round_button_square_color2"
-                android:text="스트레스"
-                android:layout_width="170dp"
-                android:layout_height="150dp"
-                android:fontFamily="@font/octninekor2"
-                android:textSize="35dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="35dp"
-                android:paddingBottom="35dp"
-                android:layout_marginEnd="30dp"/>
+        <Button
+            android:id="@+id/selfDiagnosisStressBtn"
+            android:layout_width="170dp"
+            android:layout_height="150dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/round_button_square_color2"
+            android:fontFamily="@font/octninekor2"
+            android:paddingLeft="10dp"
+            android:paddingTop="35dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="35dp"
+            android:text="스트레스"
+            android:textSize="35dp" />
 
-            <Button
-                android:background="@drawable/round_button_square_color1"
-                android:text="공황장애"
-                android:layout_width="170dp"
-                android:layout_height="150dp"
-                android:fontFamily="@font/octninekor2"
-                android:textSize="35dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="35dp"
-                android:paddingBottom="35dp" />
+        <Button
+            android:id="@+id/selfDiagnosisPanicBtn"
+            android:layout_width="170dp"
+            android:layout_height="150dp"
+            android:background="@drawable/round_button_square_color1"
+            android:fontFamily="@font/octninekor2"
+            android:paddingLeft="10dp"
+            android:paddingTop="35dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="35dp"
+            android:text="공황장애"
+            android:textSize="35dp" />
     </GridLayout>
     <Button
         android:layout_width="match_parent"
