@@ -63,7 +63,7 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
         levelTv.setText(level);
 
         if(level.equals("심각")) levelTv.setTextColor(Color.parseColor("#C00A32"));
-        else if(level.equals("주의")) levelTv.setTextColor(Color.parseColor("#ffd633"));
+        else if(level.equals("주의")) levelTv.setTextColor(Color.parseColor("#FFC107"));
         else levelTv.setTextColor(Color.parseColor("#009933"));
 
         commentTv.setText(getComment(categoryid, level));

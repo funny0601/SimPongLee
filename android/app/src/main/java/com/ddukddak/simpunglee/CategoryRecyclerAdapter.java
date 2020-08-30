@@ -50,7 +50,7 @@ class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapt
         holder.categoryScore.setText("점수:  "+categoryData.getScore());
 
         if(gradeLevel.equals("심각")) holder.categoryGrade.setTextColor(Color.parseColor("#C00A32"));
-        else if(gradeLevel.equals("주의")) holder.categoryGrade.setTextColor(Color.parseColor("#ffd633"));
+        else if(gradeLevel.equals("주의")) holder.categoryGrade.setTextColor(Color.parseColor("#FFC107"));
         else holder.categoryGrade.setTextColor(Color.parseColor("#009933"));
 
     }
