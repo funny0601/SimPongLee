@@ -1,5 +1,5 @@
 package com.ddukddak.simpunglee;
-public class SelfDiagnosisCategoryVO {
+class SelfDiagnosisCategoryVO {
 
     private String categoryName;
     private int score;

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:text="홈 화면"
+        android:text="홈"
         android:fontFamily="@font/octninekor1"
         android:textColor="@color/white"
         android:textStyle="bold"
@@ -164,7 +164,7 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:text="우울증 진단 테스트"
+                android:text="자가 진단"
                 android:gravity="center_vertical"
                 android:textAlignment="textStart"
                 android:paddingStart="15dp"

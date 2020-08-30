@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import me.omidh.liquidradiobutton.LiquidRadioButton;
 
-public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecyclerAdapter.QuestionViewHolder> {
+class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecyclerAdapter.QuestionViewHolder> {
 
     Context mContext;
     List<SelfDiagnosisQuestionVO> questionVOList = new ArrayList<>();

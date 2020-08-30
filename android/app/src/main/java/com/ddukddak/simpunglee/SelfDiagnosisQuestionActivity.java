@@ -95,24 +95,24 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
         mRecyclerView.setAdapter(mAdapter);
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rslt = mAdapter.getPointSum();
-                if(rslt==-1){
-                    Toast.makeText(getApplicationContext(), "모든 문제를 풀어주세요.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                else
-                {
-                    Intent in = new Intent(getApplicationContext(), SelfDiagnosisResultActivity.class);
-                    System.out.println("최종점수"+rslt);
-                    in.putExtra("userid", userid);
-                    in.putExtra("categoryid", categoryid);
-                    in.putExtra("selfDiagnosisScore", rslt);
-                    startActivityForResult(in, RESULT_REQUEST_CODE);
-                }
-            }
-        }
+                                         @Override
+                                         public void onClick(View v) {
+                                             rslt = mAdapter.getPointSum();
+                                             if(rslt==-1){
+                                                 Toast.makeText(getApplicationContext(), "모든 문제를 풀어주세요.", Toast.LENGTH_LONG).show();
+                                                 return;
+                                             }
+                                             else
+                                             {
+                                                 Intent in = new Intent(getApplicationContext(), SelfDiagnosisResultActivity.class);
+                                                 System.out.println("최종점수"+rslt);
+                                                 in.putExtra("userid", userid);
+                                                 in.putExtra("categoryid", categoryid);
+                                                 in.putExtra("selfDiagnosisScore", rslt);
+                                                 startActivityForResult(in, RESULT_REQUEST_CODE);
+                                             }
+                                         }
+                                     }
         );
 
 
@@ -131,9 +131,9 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == RESULT_REQUEST_CODE) {
-            if(resultCode == RESULT_CANCELED) {
+            if(resultCode == -2) {
                 Intent returnIntent = new Intent();
-                setResult(RESULT_CANCELED, returnIntent);
+                setResult(-2, returnIntent);
                 finish();
             }
             if(resultCode == RESULT_OK) {

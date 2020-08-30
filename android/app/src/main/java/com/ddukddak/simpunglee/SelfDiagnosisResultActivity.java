@@ -75,7 +75,7 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 System.out.println("onFinishBtn");
                 Intent returnIntent = new Intent();
-                setResult(RESULT_CANCELED, returnIntent);
+                setResult(-2, returnIntent);
                 finish();
             }
         });
