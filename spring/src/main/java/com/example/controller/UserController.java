@@ -23,13 +23,22 @@ public class UserController {
     @RequestMapping(value = "/selectUser", method = {RequestMethod.POST,RequestMethod.GET})
     public String selectUser(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
 
-        logger.info("selectUser");
-        String email = httpServletRequest.getParameter("email");
-        String password = httpServletRequest.getParameter("password");
+        try
+        {
+            logger.info("selectUser");
+            String email = httpServletRequest.getParameter("email");
+            String password = httpServletRequest.getParameter("password");
 
-        String user = userService.selectUser(email,password);
+            String user = userService.selectUser(email,password);
 
-        return user;
+            return user;
+        }
+        catch(NullPointerException e)
+        {
+            System.out.print("NullPointerException caught");
+            return "no";
+
+        }
     }
     @RequestMapping(value = "/getNickname", method = {RequestMethod.POST,RequestMethod.GET})
     public String getNickname(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
