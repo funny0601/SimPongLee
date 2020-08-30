@@ -23,7 +23,7 @@
             android:textAlignment="center"
             android:text="자가진단"
             android:fontFamily="@font/octninekor1"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"

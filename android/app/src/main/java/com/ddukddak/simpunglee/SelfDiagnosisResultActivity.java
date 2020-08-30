@@ -161,7 +161,7 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
 
         try {
             String response = saveResultTask.execute().get();
-            Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
