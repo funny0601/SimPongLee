@@ -5,16 +5,16 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/headerLoginText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="LOGIN"
-        android:id="@+id/headerLoginText"
-        android:fontFamily="@font/octninekor1"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:layout_marginTop="100dp"
         android:layout_marginLeft="50dp"
-        android:textSize="40sp"/>
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/octninekor1"
+        android:text="LOGIN"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
     <EditText
         android:layout_below="@id/headerLoginText"
@@ -27,7 +27,7 @@
         android:ellipsize="end"
         android:maxLength="40"
         android:maxLines="1"
-        android:backgroundTint = "#7491A6"
+        android:backgroundTint = "@color/checkbox"
         android:hint="Mail"
         android:fontFamily="@font/sourcesansproregular"
         android:inputType="textEmailAddress"
@@ -45,7 +45,7 @@
         android:maxLength="15"
         android:maxLines="1"
         android:fontFamily="@font/sourcesansproregular"
-        android:backgroundTint = "#7491A6"
+        android:backgroundTint = "@color/checkbox"
         android:hint="Password"
         android:inputType="textPassword"
         android:layout_centerInParent="true"/>
