@@ -47,13 +47,9 @@ public class BadwordFilter extends Service {
         try {
             while((line = reader.readLine()) != null) {
                 String[] token = line.split(",");
-
                 list.add(token[0].trim());
-
-                // Log.d(TAG, "CREATED : " + token[0]);
             }
         } catch (IOException e) {
-            //Log.wtf(TAG, "error reading datafile on line" + line, e);
             e.printStackTrace();
         }
     }
@@ -72,7 +68,6 @@ public class BadwordFilter extends Service {
         j = 0;
         while(j != strSplit.length) {
             strSplit[j] = st.nextToken();
-            //Log.d("print strSplit", strSplit[j]);
             j++;
         }
         while(i != list.size()) {
@@ -86,30 +81,19 @@ public class BadwordFilter extends Service {
                     Log.d("check list", list.get(i));
                     strSplit[j] = "";
                 }
-                //Log.d("check j", String.valueOf(j));
                 j++;
             }
-            //Log.d("check i", String.valueOf(i));
             i++;
         }
-
         String text = "";
         j = 0;
         while(j != strSplit.length) {
             text += strSplit[j] + " ";
-            //text.concat(strSplit[j]);
             j++;
         }
-        //      Log.d("filtered list", list.get(i));
-        //    Log.d("filtered word", strSplit[j]);
-        //if(!word.equals(list.get(i)))
-
-        Log.d(TAG, "filtered text : " + text);
         if(isBadword) {
             Toast.makeText(getApplicationContext(), "긍정적인 말을 써보는 건 어떨까요?", Toast.LENGTH_LONG).show();
-            // 만약 욕설 카운팅 할거면 여기서 세야될듯
         }else{
-            // Toast.makeText(getApplicationContext(), "욕설 없음. 깔끔", Toast.LENGTH_LONG).show();
         }
 
     }

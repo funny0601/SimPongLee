@@ -37,8 +37,6 @@ import java.util.concurrent.ExecutionException;
 
 public class CalendarActivity extends AppCompatActivity {
 
-    String url = "http://3.35.65.128:8080/simponglee/";
-
     private static final String TAG_TEXT = "text";
     private static final String TAG_IMAGE = "image";
 
@@ -214,7 +212,7 @@ public class CalendarActivity extends AppCompatActivity {
         values.put("userid", userid);
         values.put("date", date);
 
-        NetworkTask getDiaryTask = new NetworkTask(url+"selectDiary", values);
+        NetworkTask getDiaryTask = new NetworkTask("selectDiary", values);
 
         try {
             String receivedText = getDiaryTask.execute().get();
@@ -274,7 +272,7 @@ public class CalendarActivity extends AppCompatActivity {
         values.put("mood", clickedImagePosition); //현재 클릭된 이모지로 저장하기
         values.put("date", date);
 
-        NetworkTask saveDiaryTask = new NetworkTask(url+"putDiary", values);
+        NetworkTask saveDiaryTask = new NetworkTask("putDiary", values);
 
         try {
             String response = saveDiaryTask.execute().get();

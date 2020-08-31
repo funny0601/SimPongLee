@@ -25,8 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements QuestionRecyclerAdapter.ListItemClickListener {
 
-    String url = "http://3.35.65.128:8080/simponglee/";
-
     private static final String TAG = "SelfDiagnosisActivity";
 
     final private static int RESULT_REQUEST_CODE = 102;
@@ -174,7 +172,7 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
         values.put("categoryid", categoryid);
         System.out.println("categoryid : " + categoryid);
 
-        NetworkTask getQuestionTask = new NetworkTask(url + "selectQuestion", values);
+        NetworkTask getQuestionTask = new NetworkTask("selectQuestion", values);
 
         String receivedData;
         List<SelfDiagnosisQuestionVO> returnData = new ArrayList<>();

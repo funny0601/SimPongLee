@@ -28,7 +28,6 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class HomeActivity extends AppCompatActivity {
-    String url = "http://3.35.65.128:8080/simponglee/";
 
     LinearLayout diagnosisButton, chatbotButton, calendarButton;
     TextView diagnosisLevelTv;
@@ -124,7 +123,7 @@ public class HomeActivity extends AppCompatActivity {
             ContentValues values = new ContentValues();
             values.put("nickname", home_nickname);
 
-            NetworkTask getId = new NetworkTask(url+"getId", values);
+            NetworkTask getId = new NetworkTask("getId", values);
             try {
                 user_get_Id = Integer.parseInt(getId.execute().get());
             } catch (ExecutionException e) {
@@ -141,7 +140,7 @@ public class HomeActivity extends AppCompatActivity {
         values.put("userid", userid);
         values.put("categoryid", 1);
 
-        NetworkTask getLevelTask = new NetworkTask(url + "selectStartLevel", values);
+        NetworkTask getLevelTask = new NetworkTask("selectStartLevel", values);
 
         String receivedData;
         String returnData = "";

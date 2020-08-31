@@ -13,7 +13,6 @@ import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends AppCompatActivity {
 
-    String url = "http://3.35.65.128:8080/simponglee/";
     final private static int RESULT_REQUEST_CODE = 102;
     EditText login_email;
     EditText login_password;
@@ -65,13 +64,14 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
     private String loginUser(String et_login_email, String et_login_password) {
         ContentValues values = new ContentValues();
 
         values.put("email", et_login_email);
         values.put("password", et_login_password);
 
-        NetworkTask loginUser = new NetworkTask(url+"selectUser", values);
+        NetworkTask loginUser = new NetworkTask("selectUser", values);
 
         try {
 
@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(new_user_id!=-999){
                     ContentValues loginValues = new ContentValues();
                     loginValues.put("nickname", check);
-                    NetworkTask getUserID = new NetworkTask(url+"getId",loginValues);
+                    NetworkTask getUserID = new NetworkTask("getId",loginValues);
                     int user_id_loggined = Integer.parseInt(getUserID.execute().get());
                     // 방금 로그인한 사람이 방금 가입한 사람임
                     if (new_user_id==user_id_loggined){

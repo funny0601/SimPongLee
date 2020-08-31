@@ -6,11 +6,12 @@ import android.os.AsyncTask;
 public class NetworkTask extends AsyncTask<Void, Void, String> {
 
     private String url;
+    String remote_host = "http://3.35.65.128:8080/simponglee/";
     private ContentValues values;
 
     public NetworkTask(String url, ContentValues values) {
 
-        this.url = url;
+        this.url = remote_host+url;
         this.values = values;
     }
 

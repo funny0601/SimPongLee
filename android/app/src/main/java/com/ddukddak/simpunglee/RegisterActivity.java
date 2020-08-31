@@ -17,9 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.concurrent.ExecutionException;
 
 public class RegisterActivity extends AppCompatActivity {
-
-    String url = "http://3.35.65.128:8080/simponglee/";
-
     EditText name;
     EditText nickname;
     EditText email;
@@ -192,7 +189,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         values.put("nickname", nickname);
 
-        NetworkTask checkUser = new NetworkTask(url+"checkUser", values);
+        NetworkTask checkUser = new NetworkTask("checkUser", values);
         try { //닉네임 확인
             int check;
             check = Integer.parseInt(checkUser.execute().get());
@@ -225,7 +222,7 @@ public class RegisterActivity extends AppCompatActivity {
         values.put("password",password);
         values.put("phonenumber",phonenumber);
 
-        NetworkTask insertUser = new NetworkTask(url+"insertUser", values);
+        NetworkTask insertUser = new NetworkTask("insertUser", values);
 
         new_user= Integer.parseInt(insertUser.execute().get());
         return new_user;

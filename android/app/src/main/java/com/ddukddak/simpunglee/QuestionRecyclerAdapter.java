@@ -87,13 +87,10 @@ class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecyclerAdapt
     }
     @Override
     public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position) {
-        // question 목록 다 저장된거 데이터 하나씩 갖고와서
-        questionData = questionVOList.get(position);
-
+        questionData = questionVOList.get(position); // question 목록 다 저장된거 데이터 하나씩 갖고와서
         // recycler view의 item view에 붙이기
         holder.questionText.setText(questionData.getQuestion());
         holder.setIsRecyclable(false);
-
         switch (questionData.getSelectPoint()) {
             case 4:
                 holder.score4.setChecked(true);
@@ -111,13 +108,6 @@ class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecyclerAdapt
                 holder.answerGrp.clearCheck();
         }
     }
-    @Override
-
-    public int getItemCount() {
-        return questionVOList.size();
-    }
-
-
     public int getPointSum(){
         int sum =0;
         for(int i=0; i<getItemCount(); i++){
@@ -127,5 +117,9 @@ class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecyclerAdapt
             sum = sum + questionVOList.get(i).getSelectPoint();
         }
         return sum;
+    }
+    @Override
+    public int getItemCount() {
+        return questionVOList.size();
     }
 }

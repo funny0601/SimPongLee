@@ -21,9 +21,6 @@ import com.google.gson.JsonParser;
 import java.util.concurrent.ExecutionException;
 
 public class SelfDiagnosisResultActivity extends AppCompatActivity {
-
-    String url = "http://3.35.65.128:8080/simponglee/";
-
     private static final String TAG = "SelfDiagnosisResultActivity";
     TextView scoreTv, levelTv, commentTv, userNameTv;
     Button finishBtn, redoBtn;
@@ -95,7 +92,7 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
 
         values.put("userid", userid);
 
-        NetworkTask getNickname = new NetworkTask(url+"getNickname", values);
+        NetworkTask getNickname = new NetworkTask("getNickname", values);
 
         try {
             userName = getNickname.execute().get();
@@ -113,7 +110,7 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
         values.put("categoryid", categoryid);
         values.put("selfDiagnosisLevel", selfDiagnosisLevel);
 
-        NetworkTask getCommentTask = new NetworkTask(url + "selectComment", values);
+        NetworkTask getCommentTask = new NetworkTask("selectComment", values);
 
         String receivedData;
         String returnData = "";
@@ -157,7 +154,7 @@ public class SelfDiagnosisResultActivity extends AppCompatActivity {
         values.put("selfDiagnosisScore", selfDiagnosisScore);
         values.put("selfDiagnosisLevel", selfDiagnosisLevel);
 
-        NetworkTask saveResultTask = new NetworkTask(url + "putResult", values);
+        NetworkTask saveResultTask = new NetworkTask("putResult", values);
 
         try {
             String response = saveResultTask.execute().get();

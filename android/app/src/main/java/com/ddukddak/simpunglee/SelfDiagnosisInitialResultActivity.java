@@ -22,8 +22,6 @@ import java.util.concurrent.ExecutionException;
 
 public class SelfDiagnosisInitialResultActivity extends AppCompatActivity {
 
-    String url = "http://3.35.65.128:8080/simponglee/";
-
     private static final String TAG = "SelfDiagnosisInitialResultActivity";
     TextView scoreTv, levelTv, commentTv, userNameTv;
     Button finishBtn;
@@ -85,7 +83,7 @@ public class SelfDiagnosisInitialResultActivity extends AppCompatActivity {
         values.put("categoryid", categoryid);
         values.put("selfDiagnosisLevel", selfDiagnosisLevel);
 
-        NetworkTask getCommentTask = new NetworkTask(url + "selectComment", values);
+        NetworkTask getCommentTask = new NetworkTask("selectComment", values);
 
         String receivedData;
         String returnData = "";
@@ -129,7 +127,7 @@ public class SelfDiagnosisInitialResultActivity extends AppCompatActivity {
         values.put("selfDiagnosisScore", selfDiagnosisScore);
         values.put("selfDiagnosisLevel", selfDiagnosisLevel);
 
-        NetworkTask saveResultTask = new NetworkTask(url + "putResult", values);
+        NetworkTask saveResultTask = new NetworkTask("putResult", values);
 
         try {
             String response = saveResultTask.execute().get();
