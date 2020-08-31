@@ -102,8 +102,8 @@ public class HomeActivity extends AppCompatActivity {
 
         ChatbotSettings.getInstance().setChatbot( new Chatbot.ChatbotBuilder()
                 .setDoAutoWelcome(false) // True by Default, False if you do not want the Bot to greet the user Automatically. Dialogflow agent must have a welcome intent to handle this
-                //.setChatBotAvatar(getDrawable(R.drawable.chatbot_icon))
-                //.setChatUserAvatar(getDrawable(R.drawable.user_icon)) // 라이브러리 주인이 함수를 잘못 짜서 이거 해도 적용 안됨
+                .setChatBotAvatar(getDrawable(R.drawable.chatbot_icon))
+                .setChatUserAvatar(getDrawable(R.drawable.user_icon))
                 .setShowMic(false) // False by Default, True if you want to use Voice input from the user to chat
                 .build());
 
