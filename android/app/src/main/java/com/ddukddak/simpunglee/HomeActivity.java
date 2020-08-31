@@ -40,7 +40,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
         //LoginActivity에서 nickname가져와서 그걸로 다시 userid 검사함요
         String nickname = getIntent().getStringExtra("nickname");
         home_nickname = (TextView)findViewById(R.id.home_nickname);

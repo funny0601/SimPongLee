@@ -12,6 +12,7 @@ public class SelfDiagnosisInitialStartActivity extends AppCompatActivity {
 
     private int userid;
     private int categoryid;
+    private String nickname;
     Button diagnosisStartBtn;
 
     @Override
@@ -21,6 +22,7 @@ public class SelfDiagnosisInitialStartActivity extends AppCompatActivity {
 
         userid = getIntent().getIntExtra("userid", 0);
         categoryid = getIntent().getIntExtra("categoryid", 0);
+        nickname = getIntent().getStringExtra("nickname");
 
         diagnosisStartBtn = (Button)findViewById(R.id.diagnosisStartBtn);
         diagnosisStartBtn.setOnClickListener(new View.OnClickListener() {
@@ -29,6 +31,8 @@ public class SelfDiagnosisInitialStartActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), SelfDiagnosisQuestionActivity.class);
                 intent.putExtra("userid", userid);
                 intent.putExtra("categoryid", 1);
+                intent.putExtra("initial", 999);
+                intent.putExtra("nickname", nickname); // 처음 가입하면 사용자 닉네임 계속 가져가야함
                 startActivity(intent);
                 finish();
             }

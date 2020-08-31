@@ -98,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), SelfDiagnosisInitialStartActivity.class);
                         intent.putExtra("userid", user_id_loggined);
                         intent.putExtra("categoryid", 1);
+                        intent.putExtra("nickname", check.toString());
                         System.out.println("categoryid"+check);
                         startActivity(intent);
                         finish();

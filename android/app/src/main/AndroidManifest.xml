@@ -40,6 +40,9 @@
         <activity android:name=".SelfDiagnosisInitialStartActivity">
 
         </activity>
+        <activity android:name=".SelfDiagnosisInitialResultActivity">
+
+        </activity>
         <activity android:name="com.tyagiabhinav.dialogflowchatlibrary.ChatbotActivity"
             android:launchMode="singleTask" />
         <service android:name=".BadwordFilter"></service>

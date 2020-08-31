@@ -33,6 +33,7 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
 
     private int userid;
     private int categoryid;
+    private int initial;
 
     int problemCount = 0;
 
@@ -47,6 +48,7 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
     private RecyclerView mRecyclerView;
     LinearLayoutManager mLinearLayoutManager;
     private QuestionRecyclerAdapter mAdapter;
+    private String nickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,12 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
 
         userid = getIntent().getIntExtra("userid", 0);
         categoryid = getIntent().getIntExtra("categoryid", 0);
+        initial = getIntent().getIntExtra("initial", 0);
+
+        // 닉네임 있을 경우에만 받음, 초기인지 아닌지 판단
+        if (getIntent().hasExtra("nickname")) {
+           nickname =getIntent().getStringExtra("nickname");
+        }
 
         submitBtn = findViewById(R.id.submitBtn);
         quitBtn = findViewById(R.id.quiBtn);
@@ -104,24 +112,40 @@ public class SelfDiagnosisQuestionActivity extends AppCompatActivity implements 
                                              }
                                              else
                                              {
-                                                 Intent in = new Intent(getApplicationContext(), SelfDiagnosisResultActivity.class);
-                                                 System.out.println("최종점수"+rslt);
-                                                 in.putExtra("userid", userid);
-                                                 in.putExtra("categoryid", categoryid);
-                                                 in.putExtra("selfDiagnosisScore", rslt);
-                                                 startActivityForResult(in, RESULT_REQUEST_CODE);
+                                                 if(initial==999){
+                                                     // 회원가입하자마자 바로 진단테스트 할 경우
+                                                     Intent in = new Intent(getApplicationContext(), SelfDiagnosisInitialResultActivity.class);
+                                                     System.out.println("최종점수"+rslt);
+                                                     in.putExtra("userid", userid);
+                                                     in.putExtra("nickname", nickname); // 닉네임 같이 넘겨야 함
+                                                     in.putExtra("categoryid", categoryid);
+                                                     in.putExtra("selfDiagnosisScore", rslt);
+                                                     startActivity(in);
+                                                 }else{
+                                                     Intent in = new Intent(getApplicationContext(), SelfDiagnosisResultActivity.class);
+                                                     System.out.println("최종점수"+rslt);
+                                                     in.putExtra("userid", userid);
+                                                     in.putExtra("categoryid", categoryid);
+                                                     in.putExtra("selfDiagnosisScore", rslt);
+                                                     startActivityForResult(in, RESULT_REQUEST_CODE);
+                                                 }
                                              }
                                          }
                                      }
         );
 
 
+        if(initial==999){
+            // 초기 가입하면서 진단테스트 진행할 경우 뒤로가기 버튼 보이지 않게 처리
+            quitBtn.setVisibility(View.GONE);
+        }
+
         quitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent returnIntent = new Intent();
-                setResult(RESULT_OK, returnIntent);
-                finish();
+                    Intent returnIntent = new Intent();
+                    setResult(RESULT_OK, returnIntent);
+                    finish();
             }
         });
 
