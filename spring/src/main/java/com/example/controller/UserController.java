@@ -62,7 +62,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/insertUser", method = {RequestMethod.POST,RequestMethod.GET})
-    public String insertUser(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
+    public int insertUser(Locale locale, HttpServletRequest httpServletRequest) throws Exception{
 
         logger.info("insertUser");
         String name = httpServletRequest.getParameter("name");
@@ -71,10 +71,9 @@ public class UserController {
         String nickname = httpServletRequest.getParameter("nickname");
         String phonenumber = httpServletRequest.getParameter("phonenumber");
 
-
         userService.insertUser(email, password, name, nickname, phonenumber);
-
-        return "UserSuccessfullyInserted";
+        int userId = userService.getId(nickname);
+        return userId;
     }
 
     @RequestMapping(value = "/checkUser", method = {RequestMethod.POST,RequestMethod.GET})
