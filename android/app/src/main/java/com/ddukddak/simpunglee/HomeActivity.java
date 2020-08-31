@@ -28,7 +28,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class HomeActivity extends AppCompatActivity {
-    String url = "http://3.35.65.128:8080/simpunglee/";
+    String url = "http://3.35.65.128:8080/simponglee/";
 
     LinearLayout diagnosisButton, chatbotButton, calendarButton;
     TextView diagnosisLevelTv;
@@ -45,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
         String nickname = getIntent().getStringExtra("nickname");
         home_nickname = (TextView)findViewById(R.id.home_nickname);
         home_nickname.setText(nickname);
+        userId = getUserId(nickname);
 
         chatbotButton = (LinearLayout) findViewById(R.id.chatbotButton);
         chatbotButton.setOnClickListener(new View.OnClickListener() {
@@ -53,9 +54,6 @@ public class HomeActivity extends AppCompatActivity {
                 openChatbot(v); // 챗봇 액티비티로 넘어가기
             }
         });
-
-
-        userId = getUserId(nickname);
 
         calendarButton = (LinearLayout) findViewById(R.id.calendarButton);
         calendarButton.setOnClickListener(new View.OnClickListener() {
@@ -122,19 +120,20 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         }
         private int getUserId(String home_nickname){
-            ContentValues values = new ContentValues();
+            int user_get_Id=-99;
 
+            ContentValues values = new ContentValues();
             values.put("nickname", home_nickname);
 
             NetworkTask getId = new NetworkTask(url+"getId", values);
             try {
-                userId = Integer.parseInt(getId.execute().get());
+                user_get_Id = Integer.parseInt(getId.execute().get());
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            return userId;
+            return user_get_Id;
         }
 
         private String getUserLevel(int userid) {

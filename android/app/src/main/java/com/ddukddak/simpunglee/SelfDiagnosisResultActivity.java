@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutionException;
 
 public class SelfDiagnosisResultActivity extends AppCompatActivity {
 
-    String url = "http://3.35.65.128:8080/simpunglee/";
+    String url = "http://3.35.65.128:8080/simponglee/";
 
     private static final String TAG = "SelfDiagnosisResultActivity";
     TextView scoreTv, levelTv, commentTv, userNameTv;

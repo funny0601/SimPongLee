@@ -1,17 +1,15 @@
 package com.ddukddak.simpunglee;
 
 import android.content.ContentValues;
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.Toast;
-
-        import androidx.appcompat.app.AppCompatActivity;
-
-        import java.util.concurrent.ExecutionException;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -51,8 +49,18 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String et_login_email= login_email.getText().toString();
                 String et_login_password= login_password.getText().toString();
-                loginUser(et_login_email, et_login_password);
 
+                // 제대로 입력하지 않았을 때 아예 안드로이드에서 막기
+                if(et_login_email.isEmpty()||et_login_password.isEmpty()){
+                    Toast.makeText(getApplicationContext(),  "이메일과 비밀번호를 모두 입력해주세요.", Toast.LENGTH_LONG).show();
+                    login_email.setText("");
+                    login_password.setText("");
+                    return;
+                }
+
+                String result = loginUser(et_login_email, et_login_password);
+                System.out.println(result);
+                return;
             }
         });
 
@@ -68,22 +76,24 @@ public class LoginActivity extends AppCompatActivity {
         try {
 
             String check = loginUser.execute().get();
+            check = check.replaceAll("\"", ""); // string 처리 먼저해줘야함
 
             if(check.equals("no")) {
                 Toast.makeText(getApplicationContext(),  "이메일과 비밀번호를 확인해주세요.", Toast.LENGTH_LONG).show();
                 Log.d("tag", check);
-                login_email.setText(null);
-                login_password.setText(null);
-                return  "";
+                login_email.setText("");
+                login_password.setText("");
+                return  "inputWrong";
             }
-            if(!check.equals("no")){
-                check = check.replaceAll("\"", "");
+
+            else if(!check.equals("no")){
                 // 방금 회원가입한 회원인지 비교
                 if(new_user_id!=-999){
                     ContentValues loginValues = new ContentValues();
                     loginValues.put("nickname", check);
                     NetworkTask getUserID = new NetworkTask(url+"getId",loginValues);
                     int user_id_loggined = Integer.parseInt(getUserID.execute().get());
+                    // 방금 로그인한 사람이 방금 가입한 사람임
                     if (new_user_id==user_id_loggined){
                         Intent intent = new Intent(getApplicationContext(), SelfDiagnosisInitialStartActivity.class);
                         intent.putExtra("userid", user_id_loggined);
@@ -92,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }
+                    // 로그인한 사람이 방금 가입한 사람은 아님
                     else{
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         intent.putExtra("nickname", check.toString());
@@ -100,6 +111,14 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
                     }
                 }
+                // 걍 가입도 안했고 바로 로그인 시도하는 사람
+                else{
+                    Intent intent = new Intent(this, HomeActivity.class);
+                    intent.putExtra("nickname", check.toString());
+                    System.out.println("nickname"+check);
+                    startActivity(intent);
+                    finish();
+                }
             }
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -107,9 +126,9 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch(NullPointerException e) {
             Toast.makeText(getApplicationContext(),  "이메일과 비밀번호를 확인해주세요.", Toast.LENGTH_LONG).show();
-            login_email.setText(null);
-            login_password.setText(null);
-            return  "";
+            login_email.setText("");
+            login_password.setText("");
+            return  "inputNull";
         }
         return et_login_email;
     }

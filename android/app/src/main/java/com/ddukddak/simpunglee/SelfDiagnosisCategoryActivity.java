@@ -34,7 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SelfDiagnosisCategoryActivity extends AppCompatActivity {
 
-    String url = "http://3.35.65.128:8080/simpunglee/";
+    String url = "http://3.35.65.128:8080/simponglee/";
     final public static int REQUEST_CODE = 101;
     private int userid;
     List<SelfDiagnosisCategoryVO> categoryVOList;
