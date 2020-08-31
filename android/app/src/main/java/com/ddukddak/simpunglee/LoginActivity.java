@@ -15,7 +15,7 @@ import android.content.ContentValues;
 
 public class LoginActivity extends AppCompatActivity {
 
-    String url = "http://3.35.65.128:8080/simpunglee/";
+    String url = "http://3.35.65.128:8080/simponglee/";
     final private static int RESULT_REQUEST_CODE = 102;
     EditText login_email;
     EditText login_password;
@@ -92,13 +92,13 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }
-                }
-                else{
-                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                    intent.putExtra("nickname", check.toString());
-                    System.out.println("nickname"+check);
-                    startActivity(intent);
-                    finish();
+                    else{
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.putExtra("nickname", check.toString());
+                        System.out.println("nickname"+check);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             }
         } catch (ExecutionException e) {
